@@ -1,8 +1,8 @@
 ----------------------------------------------------------------------------------------------------------
 -- Title      : Multiplexer 2to1 generic
--- Project    : lab 1
+-- Project    : DLX
 ----------------------------------------------------------------------------------------------------------
--- File      : mux21generic.vhd
+-- File      : mux.vhd
 -- Author    : ms23.13
 -----------------------------------------------------------------------------------------------------------
 -- Description: This file contains the structural and behavioral description of
@@ -22,9 +22,9 @@ entity MUX21_GENERIC is
 	port
       (
         A:	in	    std_logic_vector (bits -1 downto 0);
-		B:	in	    std_logic_vector (bits -1 downto 0);
-		S:	in	    std_logic;
-		Y:	out	std_logic_vector (bits -1 downto 0)
+		    B:	in	    std_logic_vector (bits -1 downto 0);
+		    S:	in	    std_logic;
+		    Y:	out	    std_logic_vector (bits -1 downto 0)
         );
 end MUX21_GENERIC;
 
