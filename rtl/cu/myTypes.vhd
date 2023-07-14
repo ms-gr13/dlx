@@ -7,13 +7,17 @@ package myTypes is
     constant OP_CODE_SIZE : integer := 6;   -- OPCODE field size
     constant FUNC_SIZE    : integer := 11;  -- FUNC field size
 
+
+    type aluOp is (LLS, LRS, ADDS, SUBS, ANDS, ORS, XORS, SNES, SLES, SGES, NOP);
+
+
 -- R-Type instruction -> FUNC field
     constant RTYPE_ADD : std_logic_vector(FUNC_SIZE - 1 downto 0) := "00000000001";  -- ADD RS1,RS2,RD
     constant RTYPE_SUB : std_logic_vector(FUNC_SIZE - 1 downto 0) := "00000000010";  -- SUB RS1,RS2,RD
     constant RTYPE_AND : std_logic_vector(FUNC_SIZE -1 downto 0)  := "00000000011";  --AND RS1, RS2, RD
     constant RTYPE_OR  : std_logic_vector(FUNC_SIZE -1 downto 0)  := "00000000100";  --OR RS1,RS2,RD
     -- ...................
-    constant NOP       : std_logic_vector(FUNC_SIZE - 1 downto 0) := "00000000000";
+   -- constant NOP       : std_logic_vector(FUNC_SIZE - 1 downto 0) := "00000000000";
 
 -- R-Type instruction -> OPCODE field
     constant RTYPE : std_logic_vector(OP_CODE_SIZE - 1 downto 0) := "000000";  -- for ADD, SUB, AND, OR register-to-register operation

@@ -175,7 +175,7 @@ begin  -- dlx_cu_rtl
     when 14 => aluOpcode_i <= XORS; --xori
     when 20 => aluOpcode_i <= LLS; --slli
     when 22 => aluOpcode_i <= LRS; --srli
-    when 25 => aluOpcode_i <= SNES -- snei
+    when 25 => aluOpcode_i <= SNES; -- snei
     when 28 => aluOpcode_i <= SLES; --slei
     when 29 => aluOpcode_i <= SGES; --sgei
 		when others => aluOpcode_i <= NOP;
