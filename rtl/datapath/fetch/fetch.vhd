@@ -6,7 +6,6 @@ use ieee.numeric_std.all;
 
 entity fetchUnit is
     generic (nbits : integer := 32);
-
     port(
         clk          : in  std_logic;   -- Clock
         rst          : in  std_logic;   -- Reset:Active-Low
@@ -31,7 +30,6 @@ architecture STRUCTURAL of fetchUnit is
 
     component register_generic is
         generic (nbits : integer := 16);
-
         port (
             data_in  : in  std_logic_vector(nbits-1 downto 0);
             CK       : in  std_logic;

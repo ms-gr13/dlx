@@ -20,8 +20,9 @@ entity register_generic is
 
 	port (
     data_in:	  in	  std_logic_vector(nbits-1 downto 0);
-		CK:		    in	  std_logic;
+		CK:		      in	  std_logic;
 		RESET:		  in	  std_logic;
+    ENABLE:      in    std_logic;
 		data_out:	out	std_logic_vector(nbits-1 downto 0)
     );
 
@@ -50,50 +51,15 @@ begin
   -- Generate nbits instances of the flip flop D in a loop
   gen_ff: for i in 0 to nbits-1 generate
     -- Instantiate the flip flop D
-    ureg0: entity work.FD(ASYNCH_FD)   --Asynchronous FF
+    FF: entity work.FD(ASYNCH_FD)   --Asynchronous FF
       
       port map
       (
         CK    => CK,
         RESET => RESET,
         D     => data_in(i),
+        ENABLE => ENABLE,
         Q     => data_out(i)
       );
   end generate gen_ff;
 end ASYNCHRONOUS;
-
-----------------------------------------------------------------------------------------------------------------------------------
---   Synchronous ARCHITECTURE
-----------------------------------------------------------------------------------------------------------------------------------
-
-
-architecture SYNCHRONOUS of register_generic is
- 
-	-- Declare the flip flop D as a component
-  component FD is
-    port (
-      CK    : in  std_logic;
-      RESET : in  std_logic;
-      D     : in  std_logic;
-      Q     : out std_logic
-    );
-  end component;
-
-
--- Declare a signal to connect the outputs of the flip flops
-begin
-  -- Generate nbits instances of the flip flop D in a loop
-  gen_ff: for i in 0 to nbits-1 generate
-    -- Instantiate the flip flop D
-    UREG1: entity work.FD(SYNCH_FD)
-      port map (
-        CK => CK,
-        RESET => RESET,
-        D   => data_in(i),
-        Q   => data_out(i)
-      );
-  end generate gen_ff;
-end SYNCHRONOUS;
-
-
-

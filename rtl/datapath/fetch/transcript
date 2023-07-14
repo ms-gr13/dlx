@@ -1,0 +1,19 @@
+# do doFile.do
+# vsim work.testFetch(TEST) -t 100ps -voptargs="+acc" 
+# Start time: 15:26:24 on Jul 14,2023
+# Loading std.standard
+# Loading std.textio(body)
+# Loading ieee.std_logic_1164(body)
+# Loading work.testfetch(test)
+# Loading ieee.std_logic_arith(body)
+# Loading ieee.std_logic_unsigned(body)
+# Loading ieee.numeric_std(body)
+# Loading work.fetchunit(structural)
+# Loading work.rca(behavioral)
+# Loading work.register_generic(asynchronous)
+# Loading work.fd(asynch_fd)
+# 0 ps
+# 52500 ps
+# hexadecimal
+# End time: 15:40:00 on Jul 14,2023, Elapsed time: 0:13:36
+# Errors: 0, Warnings: 0

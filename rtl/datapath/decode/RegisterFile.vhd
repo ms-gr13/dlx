@@ -19,11 +19,10 @@ library IEEE;
 use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
 use IEEE.std_logic_unsigned.all;
-use WORK.constants.all; --file where we have the implementation of the log2 function
 
 
 entity REGISTER_FILE is
-  generic (NBITS      : integer := 64;
+  generic (NBITS      : integer := 32;
            NREGISTERS : integer := 32);
 
   port (CLK     : in  std_logic;
@@ -32,9 +31,9 @@ entity REGISTER_FILE is
         RD1     : in  std_logic;
         RD2     : in  std_logic;
         WR      : in  std_logic;
-        ADD_WR  : in  std_logic_vector((log2(NREGISTERS))-1 downto 0);
-        ADD_RD1 : in  std_logic_vector((log2(NREGISTERS))-1 downto 0);
-        ADD_RD2 : in  std_logic_vector((log2(NREGISTERS))-1 downto 0);
+        ADD_WR  : in  std_logic_vector(4 downto 0);
+        ADD_RD1 : in  std_logic_vector(4 downto 0);
+        ADD_RD2 : in  std_logic_vector(4 downto 0);
         DATAIN  : in  std_logic_vector(NBITS-1 downto 0);
         OUT1    : out std_logic_vector(NBITS-1 downto 0);
         OUT2    : out std_logic_vector(NBITS-1 downto 0));
