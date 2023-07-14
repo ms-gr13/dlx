@@ -11,7 +11,7 @@ entity dlx_cu is
     MICROCODE_MEM_SIZE :     integer := 10;  -- Microcode Memory Size
     FUNC_SIZE          :     integer := 11;  -- Func Field Size for R-Type Ops
     OP_CODE_SIZE       :     integer := 6;  -- Op Code Size
-    -- ALU_OPC_SIZE       :     integer := 6;  -- ALU Op Code Word Size
+    ALU_OPC_SIZE       :     integer := 3;  -- ALU Op Code Word Size
     IR_SIZE            :     integer := 32;  -- Instruction Register Size    
     CW_SIZE            :     integer := 15);  -- Control Word Size
   port (
@@ -51,16 +51,16 @@ end dlx_cu;
 
 architecture dlx_cu_hw of dlx_cu is
   type mem_array is array (integer range 0 to MICROCODE_MEM_SIZE - 1) of std_logic_vector(CW_SIZE - 1 downto 0);
-  signal cw_mem : mem_array := ("111100010000111", -- R type: IS IT CORRECT?
-                                "000000000000000",
+  signal cw_mem : mem_array := ("111101010000111", -- R type
+                                "111011110000111", -- I type
+                                "110100010001100", -- BEQZ
+                                "110100011001100", -- BNEZ
                                 "111011111001100", -- J (0X02) instruction encoding corresponds to the address to this ROM
-                                "000000000000000", -- JAL to be filled
-                                "000000000000000", -- BEQZ to be filled
-                                "000000000000000", -- BNEZ
-                                "000000000000000", -- 
-                                "000000000000000",
-                                "000000000000000", -- ADD i (0X08): FILL IT!!!
-                                "000000000000000");-- to be completed (enlarged and filled)
+                                "110100010001100", -- JAL
+                                "111101000110111", -- LW
+                                "110000000000100", -- NOP
+                                "111001000110111"  -- SW
+                                );
                                 
                                 
   signal IR_opcode : std_logic_vector(OP_CODE_SIZE -1 downto 0);  -- OpCode part of IR
@@ -153,15 +153,31 @@ begin  -- dlx_cu_rtl
 	        -- case of R type requires analysis of FUNC
 		when 0 =>
 			case conv_integer(unsigned(IR_func)) is
-				when 4 => aluOpcode_i <= LLS; -- sll according to instruction set coding
+        when 4 => aluOpcode_i <= LLS; -- sll according to instruction set coding
 				when 6 => aluOpcode_i <= LRS; -- srl
-				-- to be continued and filled with all the other instructions  
+        when 32 => aluOpcode_i <= ADDS; -- add
+        when 34 => aluOpcode_i <= SUBS; -- sub
+        when 36 => aluOpcode_i <= ANDS; -- and
+        when 37 => aluOpcode_i <= ORS; -- or
+        when 38 => aluOpcode_i <= XORS; -- xor
+        when 41 => aluOpcode_i <= SNES; -- sne
+        when 44 => aluOpcode_i <= SLES; -- sle
+        when 45 => aluOpcode_i <= SGES;  -- sge
 				when others => aluOpcode_i <= NOP;
 			end case;
+      -- not anymore R-type
 		when 2 => aluOpcode_i <= NOP; -- j
 		when 3 => aluOpcode_i <= NOP; -- jal
 		when 8 => aluOpcode_i <= ADDS; -- addi
-		-- to be continued and filled with other cases
+    when 10 => aluOpcode_i <= SUBS; --subi
+    when 12 => aluOpcode_i <= ANDS; -- andi
+    when 13 => aluOpcode_i <= ORS; --ori
+    when 14 => aluOpcode_i <= XORS; --xori
+    when 20 => aluOpcode_i <= LLS; --slli
+    when 22 => aluOpcode_i <= LRS; --srli
+    when 25 => aluOpcode_i <= SNES; -- snei
+    when 28 => aluOpcode_i <= SLES; --slei
+    when 29 => aluOpcode_i <= SGES; --sgei
 		when others => aluOpcode_i <= NOP;
 	 end case;
 	end process ALU_OP_CODE_P;
