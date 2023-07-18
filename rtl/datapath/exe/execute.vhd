@@ -13,7 +13,7 @@ use ieee.std_logic_1164.all;
 use ieee.std_logic_unsigned.all;
 use ieee.std_logic_arith.all;
 use ieee.numeric_std.all;
-
+use work.myTypes.all;
 
 entity executionUnit is
     generic (nbits : integer := 32);
@@ -31,7 +31,7 @@ entity executionUnit is
         B_out               : in  std_logic_vector(nbits -1 downto 0);
         Imm_out             : in  std_logic_vector(nbits -1 downto 0);
         ALUREG_OUTPUT       : out std_logic_vector(nbits -1 downto 0);
-        COND_OUT            : out std_logic; --to the selection bit of the mux in the mem stage
+        COND_OUT            : out std_logic --to the selection bit of the mux in the mem stage
 
         );
 
@@ -46,6 +46,14 @@ architecture STRUCTURAL of executionUnit is
     signal MUX2_OUT      : std_logic_vector(nbits -1 downto 0);    
     signal ZERO_DEC_OUT  : std_logic;
 
+
+    component FD is
+	Port (	D:	In	std_logic;
+		CK:	In	std_logic;
+		RESET:	In	std_logic;
+		ENABLE: In  std_logic;
+		Q:	Out	std_logic);
+    end component;
 
     component register_generic is
         generic (nbits : integer := 16);
@@ -76,7 +84,7 @@ architecture STRUCTURAL of executionUnit is
     component ZERO_DEC is
       generic (bits : integer := 32);
       port    (data: in std_logic_vector(bits-1 downto 0);
-           zero_detect: out std_logic;
+           zero_detect: out std_logic
            );
            
     end component;
@@ -94,7 +102,7 @@ architecture STRUCTURAL of executionUnit is
         registerA_out <= A_out;
         registerB_out <= B_out;
 
-        zerodec: ZER0_DEC
+        zerodec: ZERO_DEC
         generic map (nbits)
         port map(
             registerA_out,
@@ -129,7 +137,7 @@ architecture STRUCTURAL of executionUnit is
             ALUREG_OUTPUT
             );
         
-        alu: ALU
+        alu1: ALU
         generic map(nbits)
         port map(
             ALU_BITS,
@@ -138,8 +146,7 @@ architecture STRUCTURAL of executionUnit is
             ALU_output
         );
 
-        COND : register_generic
-        generic map(nbits)
+        COND : FD
         port map(
             ZERO_DEC_OUT,
             clk,

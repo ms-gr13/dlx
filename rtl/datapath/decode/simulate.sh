@@ -9,5 +9,4 @@ vcom signExtend.vhd
 vcom RegisterFile.vhd
 vcom rca.vhd
 vcom decode.vhd
-vcom fetch.vhd
 vsim -do doFile.do
