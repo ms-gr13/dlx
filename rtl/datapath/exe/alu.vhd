@@ -40,7 +40,7 @@ P_ALU: process (FUNC, DATA1, DATA2)
                OUTALU <= DATA1 xor DATA2;
 	when LLS =>
               OUTALU <= std_logic_vector(unsigned(DATA1) SLL to_integer(unsigned(DATA2))); 
-	when LSR =>
+	when LRS =>
               OUTALU <= std_logic_vector(unsigned(DATA1) SRL to_integer(unsigned(DATA2)));
 
 	when others => NULL;

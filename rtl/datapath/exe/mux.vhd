@@ -12,7 +12,7 @@
 
 library IEEE;
 use IEEE.std_logic_1164.all; --  libreria IEEE con definizione tipi standard logic
-use WORK.constants.all; -- libreria WORK user-defined
+
 
 
 entity MUX21_GENERIC is
@@ -35,12 +35,15 @@ end MUX21_GENERIC;
 architecture BEHAVIORAL of MUX21_GENERIC is
 
 begin
-	Y <= A when S='1' else B;
+	Y <= A when S='0' else B;
 
 end BEHAVIORAL;
 
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> bba84a4c4ddd4c1d2013204c30c68ca3c60c1a34
 
 
 
