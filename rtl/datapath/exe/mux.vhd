@@ -40,30 +40,7 @@ begin
 end BEHAVIORAL;
 
 
-----------------------------------------------------------------------------------------------------------------------------------
---   STRUCTURAL ARCHITECTURE
-----------------------------------------------------------------------------------------------------------------------------------
 
-architecture STRUCTURAL of MUX21_GENERIC is
-
-component MUX21 
-  port
-    (
-      A:	in	    std_logic;
-      B:	in	    std_logic;
-      S:	in	    std_logic;
-      Y:	out     std_logic
-      );
-end component;  
-
-begin
-
-muxGenerator:  for i in 0 to bits -1 generate
-MUXgeneric:  MUX21
-             Port Map (A(i), B(i), S, Y(i));
-end generate muxGenerator;
-
-end STRUCTURAL;
 
 
 
