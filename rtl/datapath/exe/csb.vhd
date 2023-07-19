@@ -47,6 +47,7 @@ architecture STRUCTURAL of CarrySelect is
 
 begin
   --Instantiate the 2 RCA:
+<<<<<<< HEAD
   RCA1 : entity work.RCA(STRUCTURAL)
     generic map (DRCAS => 0 ns, DRCAC => 0 ns, NBITS => NBITS)
     port map (A, B, CI0, sum1);
@@ -54,9 +55,18 @@ begin
 
   RCA2 : entity work.RCA(STRUCTURAL)
     generic map (DRCAS => 0 ns, DRCAC => 0 ns, NBITS => NBITS)
+=======
+  RCA1 : RCA
+    generic map (NBITS => NBITS)
+    port map (A, B, CI0, sum1);
+
+
+  RCA2 : RCA
+    generic map (NBITS => NBITS)
+>>>>>>> e679a782b465149b648f5c25bad876ab11c85644
     port map (A, B, CI1, sum2);
 
-  MUX21_GEN : entity work.MUX21_GENERIC(BEHAVIORAL)
+  MUX21_GEN : MUX21_GENERIC
     generic map (NBITS)
     port map(sum2, sum1, Cin, S);
 

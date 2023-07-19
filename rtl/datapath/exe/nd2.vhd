@@ -16,6 +16,7 @@ begin
 
 end ARCH1;
 
+<<<<<<< HEAD
 architecture ARCH2 of ND2 is
 
 begin
@@ -34,13 +35,10 @@ begin
 end ARCH2;
 
 
+=======
+>>>>>>> e679a782b465149b648f5c25bad876ab11c85644
 configuration CFG_ND2_ARCH1 of ND2 is
 	for ARCH1
 	end for;
 end CFG_ND2_ARCH1;
-
-configuration CFG_ND2_ARCH2 of ND2 is
-	for ARCH2
-	end for;
-end CFG_ND2_ARCH2;
 
