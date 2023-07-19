@@ -17,7 +17,7 @@ architecture BEHAVIOR of logic_and_shift is
 
 begin
 
-P_ALU: process (FUNC, DATA1, DATA2)
+P_LS: process (FUNC, DATA1, DATA2)
   -- complete all the requested functions
        variable half1: std_logic_vector(N/2-1 downto 0);
        variable half2: std_logic_vector(N/2-1 downto 0);
@@ -41,11 +41,11 @@ P_ALU: process (FUNC, DATA1, DATA2)
 	when others => NULL;
 
     end case; 
-  end process P_ALU;
+  end process P_LS;
 
 end BEHAVIOR;
 
-configuration CFG_ALU_BEHAVIORAL of ALU is
+configuration CFG_LS_BEHAVIORAL of logic_and_shift is
   for BEHAVIOR
   end for;
-end CFG_ALU_BEHAVIORAL;
+end CFG_LS_BEHAVIORAL;

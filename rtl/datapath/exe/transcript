@@ -1,0 +1,12 @@
+# do dofileP4.do
+# vsim work.TBSUM_GENERATOR(test) -t 100ps -voptargs="+acc" 
+# Start time: 19:22:39 on Jul 19,2023
+# ** Error: (vsim-3170) Could not find 'TBSUM_GENERATOR(test)'.
+#         Searched libraries:
+#             /home/fede/Microelectronics/repo/dlx/rtl/datapath/exe/work
+# Error loading design
+# Error: Error loading design
+#        Pausing macro execution
+# MACRO ./dofileP4.do PAUSED at line 1
+# End time: 19:22:43 on Jul 19,2023, Elapsed time: 0:00:04
+# Errors: 1, Warnings: 0
