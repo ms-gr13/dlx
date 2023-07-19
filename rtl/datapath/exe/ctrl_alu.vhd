@@ -31,20 +31,20 @@ architecture BEHAVIORAL of ctrl_alu is
                     Ap4 <= A;
                     Bp4 <= B;
                     Cin <= '0';
-                    Als <= "0";
-                    Bls <= "0";
+                    Als <= (others => '0');
+                    Bls <= (others => '0');
                     enableComp <= '0';
         when SUBS =>
                     Ap4 <= A;
                     Bp4 <= B;
                     Cin <= '1';
-                    Als <= "0";
-                    Bls <= "0";
+                    Als <= (others => '0');
+                    Bls <= (others => '0');
                     enableComp <= '0';
         
         when LLS | LRS | ANDS | ORS | XORS =>
-                    Ap4 <= "0";
-                    Bp4 <= "0";
+                    Ap4 <= (others => '0');
+                    Bp4 <= (others => '0');
                     Cin <= '0';
                     enableComp <= '0';
                     Als <= A;
@@ -55,14 +55,14 @@ architecture BEHAVIORAL of ctrl_alu is
                     Bp4 <= B;
                     Cin <= '1';
                     enableComp <= '1';
-                    Als <= "0";
-                    Bls <= "0";
+                    Als <= (others => '0');
+                    Bls <= (others => '0');
 
         when others =>
-                    Ap4 <= "0";
-                    Bp4 <= "0";
-                    Als <= "0";
-                    Bls <= "0";
+                    Ap4 <= (others => '0');
+                    Bp4 <= (others => '0');
+                    Als <= (others => '0');
+                    Bls <= (others => '0');
                     Cin <= '0';
                     enableComp <= '0';
     end case;

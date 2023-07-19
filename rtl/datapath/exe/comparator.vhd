@@ -5,7 +5,7 @@ use IEEE.std_logic_arith.all;
 use work.myTypes.all;
 
 
-entity Comparator is
+entity comparator is
   generic (bits : integer := 32);
   port (Cout : in  std_logic;
         EN   : in  std_logic;
@@ -13,10 +13,10 @@ entity Comparator is
         sum  : in  std_logic_vector(bits-1 downto 0);
         set  : out std_logic_vector(bits-1 downto 0)
         );
-end Comparator;
+end comparator;
 
 
-architecture BEHAVIORAL of Comparator is
+architecture BEHAVIORAL of comparator is
   signal z       : std_logic;
   signal CoutInv : std_logic;
   signal t       : std_logic;
@@ -52,6 +52,9 @@ begin
           end if;
         when others =>
           set <= (others => '0');
+        end case;
+      else
+        set <= (others => '0');
       end if;
     end process;
 end BEHAVIORAL;

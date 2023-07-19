@@ -20,5 +20,9 @@ vcom xor.vhd
 vcom P4_ADDER.vhd
 vcom ctrl_alu.vhd
 vcom logic_and_shift.vhd
+vcom comparator.vhd
+vcom outputSelect.vhd
 vcom alu_top.vhd
+vcom tb_ALU.vhd
+vsim -do doFileALU.do
 
