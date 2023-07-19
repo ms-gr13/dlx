@@ -22,7 +22,9 @@ architecture STRUCTURAL of CarrySelect is
 
 
   component RCA
-    generic (NBITS : integer := 32
+    generic (DRCAS : time    := 0 ns;
+             DRCAC : time    := 0 ns;
+             NBITS : integer := 32
              );
     port (A  : in  std_logic_vector(NBITS-1 downto 0);
           B  : in  std_logic_vector(NBITS-1 downto 0);
@@ -46,12 +48,12 @@ architecture STRUCTURAL of CarrySelect is
 begin
   --Instantiate the 2 RCA:
   RCA1 : entity work.RCA(STRUCTURAL)
-    generic map (NBITS => NBITS)
+    generic map (DRCAS => 0 ns, DRCAC => 0 ns, NBITS => NBITS)
     port map (A, B, CI0, sum1);
 
 
   RCA2 : entity work.RCA(STRUCTURAL)
-    generic map (NBITS => NBITS)
+    generic map (DRCAS => 0 ns, DRCAC => 0 ns, NBITS => NBITS)
     port map (A, B, CI1, sum2);
 
   MUX21_GEN : entity work.MUX21_GENERIC(BEHAVIORAL)

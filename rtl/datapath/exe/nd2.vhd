@@ -12,7 +12,7 @@ end ND2;
 architecture ARCH1 of ND2 is
 
 begin
-	Y <= not( A and B); -- 
+	Y <= not( A and B) after NDDELAY; -- 
 
 end ARCH1;
 
@@ -25,9 +25,9 @@ begin
 	P1: process(A,B) -- tutti gli ingressi utilizzati devono essere nella sensitivity list
 	begin
 	  if (A='1') and (B='1') then
-	    Y <='0';
+	    Y <='0' after NDDELAY;
 	  elsif (A='0') or (B='0') then 
-	    Y <='1';
+	    Y <='1' after NDDELAY;
 	  end if;
 	end process;
 
