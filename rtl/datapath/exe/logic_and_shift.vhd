@@ -2,19 +2,18 @@
 library IEEE;
 use IEEE.std_logic_1164.all;
 use IEEE.std_logic_unsigned.all;
---use IEEE.std_logic_arith.all;
 use IEEE.numeric_std.all;
 use work.myTypes.all;
 
 
-entity alu is
+entity logic_and_shift is
   generic (N : integer := 32);
   port 	 ( FUNC: in aluOp; --4 bits for the 9 operations.
            DATA1, DATA2: in std_logic_vector(N-1 downto 0);
            OUTALU: out std_logic_vector(N-1 downto 0));
-end alu;
+end logic_and_shift;
 
-architecture BEHAVIOR of alu is
+architecture BEHAVIOR of logic_and_shift is
 
 begin
 
@@ -28,10 +27,6 @@ P_ALU: process (FUNC, DATA1, DATA2)
  
     
     case FUNC is
- 	when ADDS =>
-               OUTALU <= DATA1 + DATA2;
- 	when SUBS =>
-               OUTALU <= DATA1 - DATA2;
  	when ANDS =>
                OUTALU <= DATA1 and DATA2; -- bitwise operations
  	when ORS =>
