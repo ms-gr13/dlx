@@ -1,0 +1,38 @@
+# ERROR: No extended dataflow license exists
+# do doFileALU.do
+# vsim work.TBALU(TEST) -t 100ps -voptargs="+acc" 
+# Start time: 21:44:27 on Jul 19,2023
+# Loading std.standard
+# Loading std.textio(body)
+# Loading ieee.std_logic_1164(body)
+# Loading ieee.std_logic_arith(body)
+# Loading ieee.std_logic_unsigned(body)
+# Loading work.mytypes
+# Loading work.tbalu(test)
+# Loading ieee.numeric_std(body)
+# Loading work.alu(structural)
+# Loading work.outputselect(behavioral)
+# Loading work.comparator(behavioral)
+# Loading work.ctrl_alu(behavioral)
+# Loading work.p4_adder(structural)
+# Loading synopsys.attributes
+# Loading ieee.std_logic_misc(body)
+# Loading work.xor_logic(behavioral)
+# Loading work.sumgenerator(structural)
+# Loading work.constants(body)
+# Loading work.carryselect(structural)
+# Loading work.rca(structural)
+# Loading work.fa(behavioral)
+# Loading work.mux21_generic(behavioral)
+# Loading work.cla_sparse_tree(structural)
+# Loading work.pg_generator(behavioral)
+# Loading work.g(behavioral)
+# Loading work.pg(behavioral)
+# Loading work.logic_and_shift(behavior)
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ps  Iteration: 0  Instance: /tbalu/ALU_DUT/LOGIC_SHIFT
+# 0 ps
+# 52500 ps
+# hexadecimal
+# End time: 21:48:21 on Jul 19,2023, Elapsed time: 0:03:54
+# Errors: 0, Warnings: 1

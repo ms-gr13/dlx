@@ -17,11 +17,12 @@ end comparator;
 
 
 architecture BEHAVIORAL of comparator is
-  signal z       : std_logic;
-  signal CoutInv : std_logic;
-  signal t       : std_logic;
+
 begin
   process(Cout, sum, func)
+    variable z       : std_logic;
+  variable CoutInv : std_logic;
+  variable t       : std_logic;
   begin
     if EN = '1' then
       case func is
@@ -33,11 +34,13 @@ begin
           end if;
 
         when SLES =>
-          for i in bits-1 downto 0 loop
-            z <= not (sum(i) or '0');
-          end loop;
-          CoutInv <= not Cout;
-          t       <= CoutInv xor z;
+          if sum = "0" then
+            z := '1';
+          else
+            z := '0';
+          end if;
+          CoutInv := not Cout;
+          t       := CoutInv xor z;
           if t = '1' then
             set <= (others => '1');
           else
@@ -45,6 +48,11 @@ begin
           end if;
 
         when SNES =>
+          if sum = "0" then
+            z := '1';
+          else
+            z := '0';
+          end if;
           if z = '0' then
             set <= (others => '1');
           else

@@ -45,6 +45,15 @@ begin
 
     FUNCsig <= SNES;
     wait for 5 ns;
+    Asig <= X"00001111";
+    wait for 10 ns;
+
+    FUNCsig <= SGES;
+    wait for 10 ns;
+
+    Asig <= X"00002222";
+    FUNCsig <= SLES;
+    wait for 10 ns;
 
   end process STIMULUS1;
 
