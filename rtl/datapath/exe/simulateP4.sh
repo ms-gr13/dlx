@@ -5,8 +5,6 @@ set -e
 
 
 vcom constants.vhd
-vcom iv.vhd
-vcom nd2.vhd
 vcom mux21generic.vhd
 vcom lfsr.vhd
 vcom fa.vhd

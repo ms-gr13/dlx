@@ -3,9 +3,7 @@ use ieee.std_logic_1164.all;
 
 
 entity RCA is
-  generic (DRCAS : time    := 0 ns;
-           DRCAC : time    := 0 ns;
-           NBITS : integer := 32);
+  generic (NBITS : integer := 32);
   port (A  : in  std_logic_vector(NBITS-1 downto 0);
         B  : in  std_logic_vector(NBITS-1 downto 0);
         Ci : in  std_logic;
@@ -19,8 +17,6 @@ architecture STRUCTURAL of RCA is
   signal CTMP : std_logic_vector(NBITS downto 0);
 
   component FA
-    generic (DFAS : time := 0 ns;
-             DFAC : time := 0 ns);
     port (A  : in  std_logic;
           B  : in  std_logic;
           Ci : in  std_logic;
@@ -36,7 +32,6 @@ begin
 
   ADDER1 : for I in 1 to NBITS generate
     FAI : FA
-      generic map (DFAS => DRCAS, DFAC => DRCAC)
       port map (A(I-1), B(I-1), CTMP(I-1), STMP(I-1), CTMP(I));
   end generate;
 
@@ -49,10 +44,10 @@ begin
     variable carry : std_logic := '0';
   begin
     for i in 0 to NBITS-1 loop
-      S(i)  <= (A(i) xor B(i) xor carry xor Ci) after DRCAS;
+      S(i)  <= (A(i) xor B(i) xor carry xor Ci);
       carry := ((A(i) and B(i)) or (A(i) and carry) or (B(i) and carry));
     end loop;
-    Co    <= carry after DRCAC;
+    Co    <= carry; 
     carry := '0';
   end process;
 
