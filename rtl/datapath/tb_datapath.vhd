@@ -155,7 +155,7 @@ architecture TEST of TBDP is
                 LMD_LATCH_ENs <= '1';
                 JUMP_ENs <= '0';
                 PC_LATCH_ENs <= '1';
-                PC_INs <= "00000000000000000000000000000100";
+                PC_INs <= "00000000000000000000000000000000";
                 DRAM_DATAs <= "00000000100000000100000100000010";
                 wait for 2 ns;
 

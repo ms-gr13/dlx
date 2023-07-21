@@ -63,7 +63,6 @@ architecture STRUCTURAL of datapath is
     signal ALUREG_OUTPUTs     : std_logic_vector(nbits -1 downto 0);
     signal COND_OUTs          : std_logic;
 
-    signal DRAM_DATAs         : std_logic_vector(nbits-1 downto 0);
     signal LMD_OUTs           : std_logic_vector(nbits -1 downto 0); 
     signal TO_PC_OUTs         : std_logic_vector(nbits -1 downto 0);
 
@@ -215,7 +214,6 @@ begin
         rst,
         LMD_LATCH_EN,    
         JUMP_EN,             
-
         DRAM_DATA,           
         ALUREG_OUTPUTs,       
         NPC_OUTs,             
