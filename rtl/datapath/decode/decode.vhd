@@ -5,7 +5,9 @@ use ieee.std_logic_arith.all;
 use ieee.numeric_std.all;
 
 entity decodeUnit is
-    generic (nbits : integer := 32);
+    generic (nbits : integer := 32;
+    bits : integer := 16
+    );
 
     port(
         clk             : in  std_logic;  -- Clock
@@ -53,7 +55,7 @@ architecture STRUCTURAL of decodeUnit is
     end component;
 
     component REGISTER_FILE is
-        generic (NBITS      : integer := 64;
+        generic (NBITS      : integer := 32;
                  NREGISTERS : integer := 32);
 
         port (
@@ -120,13 +122,14 @@ begin
             );
 
     Signext : SIGN_EXT
-        generic map(nbits)
+        generic map(bits)
         port map(
             signExtIn,
             signExtOut
             );
 
     RF : REGISTER_FILE
+        generic map(nbits)
         port map(
             CLK     => clk,
             RESET   => rst,

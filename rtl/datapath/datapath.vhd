@@ -3,6 +3,7 @@ use ieee.std_logic_1164.all;
 use ieee.std_logic_unsigned.all;
 use ieee.std_logic_arith.all;
 use ieee.numeric_std.all;
+use work.myTypes.all;
 
 entity datapath is
     generic (nbits : integer := 32);
@@ -21,29 +22,53 @@ entity datapath is
         RegA_LATCH_EN   : in  std_logic;  -- Register A Latch Enable
         RegB_LATCH_EN   : in  std_logic;  -- Register B Latch Enable
         RegIMM_LATCH_EN : in  std_logic;  -- Immediate Register Latch Enable
-        RF_WE           : in  std_logic
-    );
+        RF_WE           : in  std_logic;
+
+
+        -- EX Control Signals
+        MUXA_SEL           : in std_logic;  -- MUX-A Sel
+        MUXB_SEL           : in std_logic;  -- MUX-B Sel
+        ALU_OUTREG_EN      : in std_logic;  -- ALU Output Register Enable
+        EQ_COND            : in std_logic;  -- Branch if (not) Equal to Zero
+        ALU_OPCODE         : in aluOp; -- choose between implicit or exlicit coding, like std_logic_vector(ALU_OPC_SIZE -1 downto 0);
+
+
+         -- MEM Control Signals
+        DRAM_DATA          : in std_logic_vector(nbits -1 downto 0);
+        LMD_LATCH_EN       : in std_logic;  -- LMD Register Latch Enable
+        JUMP_EN            : in std_logic;  -- JUMP Enable Signal for PC input MUX
+        
+        -- WB Control signals
+        WB_MUX_SEL         : in std_logic;  -- Write Back MUX Sel
+
+        --OUTPUTS -> TO THE MOMORIES
+        B                  : out std_logic_vector(nbits -1 downto 0);
+        ALU_OUT            : out std_logic_vector(nbits -1 downto 0);
+        ADDRESS_IRAM       : out std_logic_vector(nbits - 1 downto 0)
+        );
+
 end datapath;
  
 
 architecture STRUCTURAL of datapath is
     
-    signal DATA_IRAMs    : std_logic_vector(nbits-1 downto 0);
-    signal IR_LATCH_ENs  : std_logic;
-    signal NPC_LATCH_ENs : std_logic;
-    signal PC_LATCH_ENs  : std_logic;
-    signal PC_INs        : std_logic_vector(nbits-1 downto 0);
     signal ADDRESS_IRAMs : std_logic_vector(nbits-1 downto 0);
     signal NPC_OUTs      : std_logic_vector(nbits-1 downto 0);
     signal IR_OUTs       : std_logic_vector(nbits-1 downto 0);
 
-    signal RegA_LATCH_ENs  : std_logic;
-    signal RegB_LATCH_ENs  : std_logic;
-    signal RegIMM_LATCH_ENs : std_logic;
-    signal RF_WEs          : std_logic;
-    signal A_outs          : std_logic_vector(nbits-1 downto 0);
-    signal B_outs          : std_logic_vector(nbits-1 downto 0);
-    signal Imm_outs        : std_logic_vector(nbits-1 downto 0);
+    signal A_outs        : std_logic_vector(nbits-1 downto 0);
+    signal B_outs        : std_logic_vector(nbits-1 downto 0);
+    signal Imm_outs      : std_logic_vector(nbits-1 downto 0);
+
+    signal ALUREG_OUTPUTs     : std_logic_vector(nbits -1 downto 0);
+    signal COND_OUTs          : std_logic;
+
+    signal DRAM_DATAs         : std_logic_vector(nbits-1 downto 0);
+    signal LMD_OUTs           : std_logic_vector(nbits -1 downto 0); 
+    signal TO_PC_OUTs         : std_logic_vector(nbits -1 downto 0);
+
+    signal DATAIN_RFs         : std_logic_vector(nbits -1 downto 0);
+
 
 
     component fetchUnit is
@@ -60,7 +85,6 @@ architecture STRUCTURAL of datapath is
         ADDRESS_IRAM : out std_logic_vector(nbits - 1 downto 0);
         NPC_OUT      : out std_logic_vector(nbits -1 downto 0);
         IR_OUT       : out std_logic_vector(nbits -1 downto 0)
-
         );
     end component;
 
@@ -73,6 +97,7 @@ architecture STRUCTURAL of datapath is
         RegB_LATCH_EN   : in  std_logic;  -- Register B Latch Enable
         RegIMM_LATCH_EN : in  std_logic;  -- Immediate Register Latch Enable
         RF_WE           : in  std_logic;
+        DATAIN          : in  std_logic_vector(nbits-1 downto 0);
         IR_OUT          : in  std_logic_vector(nbits-1 downto 0);
         A_out           : out std_logic_vector(nbits -1 downto 0);
         B_out           : out std_logic_vector(nbits -1 downto 0);
@@ -81,19 +106,57 @@ architecture STRUCTURAL of datapath is
 
     end component;
 
+    component executionUnit is
+        generic (nbits : integer := 32);
+        port(
+            clk                 : in  std_logic;  -- Clock
+            rst                 : in  std_logic;  -- Reset:Active-Low
+            ALU_OUTREG_ENABLE   : in  std_logic;  -- Register A Latch Enable
+            MUXA_SEL            : in  std_logic;  -- Register B Latch Enable
+            MUXB_SEL            : in  std_logic;  -- Immediate Register Latch Enable
+            COND_ENABLE         : in  std_logic;
+            ALU_BITS            : in  aluOp;
+            NPC_OUT             : in  std_logic_vector(nbits -1 downto 0);
+            A_out               : in  std_logic_vector(nbits -1 downto 0);
+            B_out               : in  std_logic_vector(nbits -1 downto 0);
+            Imm_out             : in  std_logic_vector(nbits -1 downto 0);
+            ALUREG_OUTPUT       : out std_logic_vector(nbits -1 downto 0);
+            COND_OUT            : out std_logic --to the selection bit of the mux in the mem stage
+            );
+    end component;
+
+    component memoryUnit is
+        generic (nbits : integer := 32);
+        port(
+            clk                 : in  std_logic;  -- Clock
+            rst                 : in  std_logic;  -- Reset:Active-Low
+            LMD_LATCH_EN        : in  std_logic;  -- Register A Latch Enable
+            JUMP_EN             : in  std_logic;  -- Register B Latch Enable
+            DRAM_DATA           : in  std_logic_vector(nbits-1 downto 0);
+            ALUREG_OUTPUT       : in std_logic_vector(nbits -1 downto 0);
+            NPC_OUT             : in std_logic_vector(nbits -1 downto 0);
+            COND_OUT            : in std_logic;
+            LMD_OUT             : out std_logic_vector(nbits -1 downto 0); 
+            TO_PC_OUT           : out std_logic_vector(nbits -1 downto 0)
+            );
+    end component;
+
+    component writeBack is
+        generic (nbits : integer := 32);
+        port(
+            LMD_OUT             : in  std_logic_vector(nbits-1 downto 0);
+            ALUREG_OUTPUT       : in std_logic_vector(nbits -1 downto 0);
+            WB_MUX_SEL          : in std_logic;
+            DATAIN_RF           : out std_logic_vector(nbits -1 downto 0) 
+            );
+    end component;
+
 
 begin
-    
-    DATA_IRAMs <= DATA_IRAM;
-    IR_LATCH_ENs <= IR_LATCH_EN;
-    NPC_LATCH_ENs <= NPC_LATCH_EN;
-    PC_LATCH_ENs <= PC_LATCH_EN;
-    PC_INs <= PC_IN;
 
-    RegA_LATCH_ENs <= RegA_LATCH_EN;
-    RegB_LATCH_ENs <= RegB_LATCH_EN;
-    RegIMM_LATCH_ENs <= RegIMM_LATCH_EN;
-    RF_WEs <= RF_WE; 
+    B <= B_outs;
+    ALU_OUT <= ALUREG_OUTPUTS;
+    ADDRESS_IRAM <= ADDRESS_IRAMS;
 
     
     FETCH : fetchUnit
@@ -101,11 +164,11 @@ begin
     port map(
         clk,
         rst,
-        DATA_IRAMs,
-        IR_LATCH_ENs,
-        NPC_LATCH_ENs,
-        PC_LATCH_ENs,
-        PC_INs,
+        DATA_IRAM,
+        IR_LATCH_EN,
+        NPC_LATCH_EN,
+        PC_LATCH_EN,
+        PC_IN,
         ADDRESS_IRAMs,
         NPC_OUTs,
         IR_OUTs
@@ -116,14 +179,58 @@ begin
     port map(
         clk,
         rst,
-        RegA_LATCH_ENs,
-        RegB_LATCH_ENs,
-        RegIMM_LATCH_ENs,
-        RF_WEs,
+        RegA_LATCH_EN,
+        RegB_LATCH_EN,
+        RegIMM_LATCH_EN,
+        RF_WE,
+        DATAIN_RFs,
         IR_OUTs,
         A_outs,
         B_outs,
         Imm_outs
+    );
+
+    EXECUTE: executionUnit
+    generic map (nbits)
+    port map(
+        clk,
+        rst,
+        ALU_OUTREG_EN,
+        MUXA_SEL,           
+        MUXB_SEL,            
+        EQ_COND,         
+        ALU_OPCODE, 
+        NPC_OUTs,             
+        A_outs,               
+        B_outs,               
+        Imm_outs,             
+        ALUREG_OUTPUTs,       
+        COND_OUTs            
+    );
+
+    MEMORY: memoryUnit
+    generic map (nbits)
+    port map(
+        clk,
+        rst,
+        LMD_LATCH_EN,    
+        JUMP_EN,             
+
+        DRAM_DATA,           
+        ALUREG_OUTPUTs,       
+        NPC_OUTs,             
+        COND_OUTs,            
+        LMD_OUTs,             
+        TO_PC_OUTs
+    );
+
+    WB: writeBack
+    generic map (nbits)
+    port map(
+        LMD_OUTs,
+        ALUREG_OUTPUTs,       
+        WB_MUX_SEL,
+        DATAIN_RFs
     );
 
 

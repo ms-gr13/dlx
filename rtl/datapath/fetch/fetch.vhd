@@ -12,7 +12,7 @@ entity fetchUnit is
         DATA_IRAM    : in  std_logic_vector(nbits - 1 downto 0);
         IR_LATCH_EN  : in  std_logic;   -- Instruction Register Latch Enable
         NPC_LATCH_EN : in  std_logic;
-        PC_LATCH_EN  : in  std_logic;   -- Program Counte Latch Enable
+        PC_LATCH_EN  : in  std_logic;   -- Program Counter Latch Enable
         PC_IN        : in  std_logic_vector(nbits-1 downto 0);
         ADDRESS_IRAM : out std_logic_vector(nbits - 1 downto 0);
         NPC_OUT      : out std_logic_vector(nbits -1 downto 0);

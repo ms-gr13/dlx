@@ -3,15 +3,13 @@ use ieee.std_logic_1164.all;
 use ieee.std_logic_unsigned.all;
 use ieee.std_logic_arith.all;
 use work.myTypes.all;
---use ieee.numeric_std.all;
---use work.all;
+
 
 entity dlx_cu is
   generic (
     MICROCODE_MEM_SIZE :     integer := 10;  -- Microcode Memory Size
     FUNC_SIZE          :     integer := 11;  -- Func Field Size for R-Type Ops
     OP_CODE_SIZE       :     integer := 6;  -- Op Code Size
-   -- ALU_OPC_SIZE       :     integer := 3;  -- ALU Op Code Word Size
     IR_SIZE            :     integer := 32;  -- Instruction Register Size    
     CW_SIZE            :     integer := 15);  -- Control Word Size
   port (
