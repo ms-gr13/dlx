@@ -75,7 +75,7 @@ architecture TEST of TBDP is
         signal MUXB_SELs           : std_logic;  -- MUX-B Sel
         signal ALU_OUTREG_ENs      : std_logic;  -- ALU Output Register Enable
         signal EQ_CONDs            : std_logic;  -- Branch if (not) Equal to Zero
-        signal ALU_OPCODEs         : aluOp; -- choose between implicit or exlicit coding, like std_logic_vector(ALU_OPC_SIZE -1 downto 0);
+        signal ALU_OPCODEs         : aluOp := NOP; -- choose between implicit or exlicit coding, like std_logic_vector(ALU_OPC_SIZE -1 downto 0);
 
 
          -- MEM Control Signals
@@ -131,6 +131,7 @@ architecture TEST of TBDP is
                 -- first clock cycle 
                 IR_LATCH_ENs <= '1';
                 NPC_LATCH_ENs <= '1';
+                PC_LATCH_ENs <= '1', '0' after 1 ns;
                 wait for 2 ns;
 
                 
@@ -138,6 +139,7 @@ architecture TEST of TBDP is
                 RegA_LATCH_ENs <= '1';
                 RegB_LATCH_ENs <= '1';
                 RegIMM_LATCH_ENs <= '0';
+                DRAM_DATAs <= "00000000100000000100000100000010";
                 wait for 2 ns;
 
                 
@@ -156,7 +158,6 @@ architecture TEST of TBDP is
                 JUMP_ENs <= '0';
                 PC_LATCH_ENs <= '1';
                 PC_INs <= "00000000000000000000000000000000";
-                DRAM_DATAs <= "00000000100000000100000100000010";
                 wait for 2 ns;
 
                 --fifth clock cycle

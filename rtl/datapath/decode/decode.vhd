@@ -89,7 +89,9 @@ begin
                                                                                                  --When ITYPE --> 20 downto 16
     signExtIn <= IR_OUT(15 downto 0);
 
-
+    A_out <= RegisterAout;
+    B_out <= RegisterBout;
+    Imm_out <= RegisterImmout;
 
     A : register_generic
         generic map(nbits)

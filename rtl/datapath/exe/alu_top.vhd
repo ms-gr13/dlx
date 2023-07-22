@@ -87,7 +87,7 @@ end component;
   signal p4_ctrl_A   : std_logic_vector (NBITS-1 downto 0);
   signal p4_ctrl_B   : std_logic_vector (NBITS-1 downto 0);
   signal p4_ctrl_Cin : std_logic;
-  signal p4_outsig      : std_logic_vector (NBITS-1 downto 0);
+  signal p4_outsig   : std_logic_vector (NBITS-1 downto 0);
   signal p4_comp_Co  : std_logic;
 
   --SIGNALS LOGIC & SHIFT

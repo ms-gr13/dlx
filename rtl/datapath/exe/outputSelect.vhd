@@ -19,7 +19,7 @@ architecture BEHAVIORAL of outputSelect is
     
     begin
 
-    process(p4_out,LS_OUT,comp_out)
+    process(FUNC, p4_out,LS_OUT,comp_out)
         begin
         case FUNC is
             when ADDS | SUBS =>
@@ -31,7 +31,7 @@ architecture BEHAVIORAL of outputSelect is
             when SNES | SLES | SGES =>
                 outputSel <= comp_out;
             when others =>
-                outputSel <= "0";
+                outputSel <= (others => '0');
         end case;
         end process;
 end BEHAVIORAL;
