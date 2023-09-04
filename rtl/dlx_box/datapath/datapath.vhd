@@ -16,7 +16,6 @@ entity datapath is
         IR_LATCH_EN  : in  std_logic;   -- Instruction Register Latch Enable
         NPC_LATCH_EN : in  std_logic;
         PC_LATCH_EN  : in  std_logic;   -- Program Counte Latch Enable
-        PC_IN        : in  std_logic_vector(nbits-1 downto 0);
 
         --DECODE CONTROL SIGNALS
         RegA_LATCH_EN   : in  std_logic;  -- Register A Latch Enable
@@ -44,7 +43,8 @@ entity datapath is
         --OUTPUTS -> TO THE MOMORIES
         B                  : out std_logic_vector(nbits -1 downto 0);
         ALU_OUT            : out std_logic_vector(nbits -1 downto 0);
-        ADDRESS_IRAM       : out std_logic_vector(nbits - 1 downto 0)
+        ADDRESS_IRAM       : out std_logic_vector(nbits - 1 downto 0);
+        IR_OUT             : out std_logic_vector(nbits-1 downto 0)  --I ADDDED THIS, THE CU NEEDS IT
         );
 
 end datapath;
@@ -156,7 +156,7 @@ begin
     B <= B_outs;
     ALU_OUT <= ALUREG_OUTPUTS;
     ADDRESS_IRAM <= ADDRESS_IRAMS;
-
+    IR_OUT <= IR_OUTs;
     
     FETCH : fetchUnit
     generic map (nbits)
@@ -167,7 +167,7 @@ begin
         IR_LATCH_EN,
         NPC_LATCH_EN,
         PC_LATCH_EN,
-        PC_IN,
+        TO_PC_OUTs,
         ADDRESS_IRAMs,
         NPC_OUTs,
         IR_OUTs
