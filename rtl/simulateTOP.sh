@@ -50,7 +50,6 @@ vcom dlx_box/datapath/wb/WB.vhd
 vcom dlx_box/datapath/datapath.vhd
 
 #COMPILE CONTROL UNIT
-vcom dlx_box/cu/myTypes.vhd
 vcom dlx_box/cu/CU_HW.vhd
 
 #COMPILE DLX
@@ -63,5 +62,5 @@ vcom topModule.vhd
 #COMPILE TESTBENCH
 vcom TB_top_module.vhd
 
-vsim -do run.do
+vsim -do run.do 
 

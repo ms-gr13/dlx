@@ -52,22 +52,26 @@ end datapath;
 
 architecture STRUCTURAL of datapath is
     
-    signal ADDRESS_IRAMs : std_logic_vector(nbits-1 downto 0);
-    signal NPC_OUTs      : std_logic_vector(nbits-1 downto 0);
-    signal IR_OUTs       : std_logic_vector(nbits-1 downto 0);
+    signal ADDRESS_IRAMs : std_logic_vector(nbits-1 downto 0) := (others => '0');
+    signal NPC_OUTs      : std_logic_vector(nbits-1 downto 0) := (others => '0');
+    signal IR_OUTs       : std_logic_vector(nbits-1 downto 0) := (others => '0');
 
-    signal A_outs        : std_logic_vector(nbits-1 downto 0);
-    signal B_outs        : std_logic_vector(nbits-1 downto 0);
-    signal Imm_outs      : std_logic_vector(nbits-1 downto 0);
+    signal A_outs        : std_logic_vector(nbits-1 downto 0) := (others => '0');
+    signal B_outs        : std_logic_vector(nbits-1 downto 0) := (others => '0');
+    signal Imm_outs      : std_logic_vector(nbits-1 downto 0) := (others => '0');
 
-    signal ALUREG_OUTPUTs     : std_logic_vector(nbits -1 downto 0);
-    signal COND_OUTs          : std_logic;
+    signal ALUREG_OUTPUTs     : std_logic_vector(nbits -1 downto 0) := (others => '0');
+    signal COND_OUTs          : std_logic := '0';
 
-    signal LMD_OUTs           : std_logic_vector(nbits -1 downto 0); 
-    signal TO_PC_OUTs         : std_logic_vector(nbits -1 downto 0);
+    signal LMD_OUTs           : std_logic_vector(nbits -1 downto 0) := (others => '0'); 
+    signal TO_PC_OUTs         : std_logic_vector(nbits -1 downto 0) := (others => '0');
+    signal ALU_OUT2s          : std_logic_vector(nbits -1 downto 0);
 
-    signal DATAIN_RFs         : std_logic_vector(nbits -1 downto 0);
+    signal DATAIN_RFs         : std_logic_vector(nbits -1 downto 0) := (others => '0');
 
+    signal IR_OUT2s           : std_logic_vector(nbits-1 downto 0);
+    signal IR_OUT3s           : std_logic_vector(nbits-1 downto 0);
+    signal IR_OUT4s           : std_logic_vector(nbits-1 downto 0);
 
 
     component fetchUnit is
@@ -100,7 +104,9 @@ architecture STRUCTURAL of datapath is
         IR_OUT          : in  std_logic_vector(nbits-1 downto 0);
         A_out           : out std_logic_vector(nbits -1 downto 0);
         B_out           : out std_logic_vector(nbits -1 downto 0);
-        Imm_out         : out std_logic_vector(nbits -1 downto 0)
+        Imm_out         : out std_logic_vector(nbits -1 downto 0);
+        IR_IN2          : in  std_logic_vector(nbits-1 downto 0);
+        IR_OUT2         : out  std_logic_vector(nbits-1 downto 0)
         );
 
     end component;
@@ -120,7 +126,9 @@ architecture STRUCTURAL of datapath is
             B_out               : in  std_logic_vector(nbits -1 downto 0);
             Imm_out             : in  std_logic_vector(nbits -1 downto 0);
             ALUREG_OUTPUT       : out std_logic_vector(nbits -1 downto 0);
-            COND_OUT            : out std_logic --to the selection bit of the mux in the mem stage
+            COND_OUT            : out std_logic; --to the selection bit of the mux in the mem stage
+            IR_IN3              : in  std_logic_vector(nbits-1 downto 0);
+            IR_OUT3             : out  std_logic_vector(nbits-1 downto 0)
             );
     end component;
 
@@ -135,8 +143,11 @@ architecture STRUCTURAL of datapath is
             ALUREG_OUTPUT       : in std_logic_vector(nbits -1 downto 0);
             NPC_OUT             : in std_logic_vector(nbits -1 downto 0);
             COND_OUT            : in std_logic;
-            LMD_OUT             : out std_logic_vector(nbits -1 downto 0); 
-            TO_PC_OUT           : out std_logic_vector(nbits -1 downto 0)
+            LMD_OUT             : out std_logic_vector(nbits -1 downto 0);
+            TO_PC_OUT           : out std_logic_vector(nbits -1 downto 0);
+            ALU_OUT2            : out std_logic_vector(nbits -1 downto 0);
+            IR_IN4              : in  std_logic_vector(nbits-1 downto 0);
+            IR_OUT4             : out  std_logic_vector(nbits-1 downto 0)
             );
     end component;
 
@@ -157,7 +168,6 @@ begin
     ALU_OUT <= ALUREG_OUTPUTS;
     ADDRESS_IRAM <= ADDRESS_IRAMS;
     IR_OUT <= IR_OUTs;
-    
     FETCH : fetchUnit
     generic map (nbits)
     port map(
@@ -186,7 +196,9 @@ begin
         IR_OUTs,
         A_outs,
         B_outs,
-        Imm_outs
+        Imm_outs,
+        IR_OUT4s,
+        IR_OUT2s
     );
 
     EXECUTE: executionUnit
@@ -204,7 +216,9 @@ begin
         B_outs,               
         Imm_outs,             
         ALUREG_OUTPUTs,       
-        COND_OUTs            
+        COND_OUTs,
+        IR_OUT2s,
+        IR_OUT3s         
     );
 
     MEMORY: memoryUnit
@@ -218,15 +232,18 @@ begin
         ALUREG_OUTPUTs,       
         NPC_OUTs,             
         COND_OUTs,            
-        LMD_OUTs,             
-        TO_PC_OUTs
+        LMD_OUTs,            
+        TO_PC_OUTs,
+        ALU_OUT2s,
+        IR_OUT3s,
+        IR_OUT4s
     );
 
     WB: writeBack
     generic map (nbits)
     port map(
         LMD_OUTs,
-        ALUREG_OUTPUTs,       
+        ALU_OUT2s,       
         WB_MUX_SEL,
         DATAIN_RFs
     );

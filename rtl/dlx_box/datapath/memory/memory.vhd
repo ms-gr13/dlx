@@ -27,7 +27,10 @@ entity memoryUnit is
         NPC_OUT             : in std_logic_vector(nbits -1 downto 0);
         COND_OUT            : in std_logic;
         LMD_OUT             : out std_logic_vector(nbits -1 downto 0); 
-        TO_PC_OUT           : out std_logic_vector(nbits -1 downto 0)
+        TO_PC_OUT           : out std_logic_vector(nbits -1 downto 0);
+        ALU_OUT2            : out std_logic_vector(nbits -1 downto 0);
+        IR_IN4              : in  std_logic_vector(nbits-1 downto 0);
+        IR_OUT4             : out  std_logic_vector(nbits-1 downto 0)
         );
 
 end memoryUnit;
@@ -37,6 +40,10 @@ architecture STRUCTURAL of memoryUnit is
 
     signal muxjmp_to_mux : std_logic; 
     signal LMD_OUTsig    : std_logic_vector(nbits -1 downto 0);
+    signal TO_PC_OUTs    : std_logic_vector(nbits -1 downto 0) := (others => '0');
+    signal ALU_OUT2s     : std_logic_vector(nbits -1 downto 0);
+    signal IR_IN4s       : std_logic_vector(nbits-1 downto 0);
+    signal IR_OUT4s      : std_logic_vector(nbits-1 downto 0);
 
     component register_generic is
         generic (nbits : integer := 16);
@@ -73,6 +80,10 @@ architecture STRUCTURAL of memoryUnit is
     begin
 
         LMD_OUT <= LMD_OUTsig;
+        TO_PC_OUT <= TO_PC_OUTs;
+        ALU_OUT2 <= ALU_OUT2s;
+        IR_IN4s <= IR_IN4;
+        IR_OUT4 <= IR_OUT4s;
 
         JUMPMUX: MUX21  --MUX21 STD_LOGIC
         generic map (1)
@@ -83,13 +94,14 @@ architecture STRUCTURAL of memoryUnit is
             muxjmp_to_mux 
         );
 
+
         MUX_PC: MUX21_GENERIC
         generic map (nbits)
         port map(
             ALUREG_OUTPUT, --I PUT THIS FIRST BECAUSE IF SEL = '1' WE SELECT THE OUTPUT OF THE ALU
             NPC_OUT,
             muxjmp_to_mux,
-            TO_PC_OUT 
+            TO_PC_OUTs 
         );
 
         LMD : register_generic
@@ -100,6 +112,26 @@ architecture STRUCTURAL of memoryUnit is
             rst,
             LMD_LATCH_EN,
             LMD_OUTsig
+        );
+
+        ALU_OUT2r: register_generic
+        generic map (nbits)
+        port map(
+            ALUREG_OUTPUT,
+            clk,
+            rst,
+            '1',
+            ALU_OUT2s
+        );
+
+        IR4: register_generic
+        generic map(nbits)
+        port map(
+            IR_IN4s,
+            clk,
+            rst,
+            '1',
+            IR_OUT4s
         );
 
 

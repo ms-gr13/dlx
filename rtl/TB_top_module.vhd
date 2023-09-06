@@ -10,7 +10,7 @@ end TB_top;
 architecture TEST of TB_top is
 
 constant NBITS : integer := 32;
-signal clk,rst : std_logic;
+signal clk,rst : std_logic := '1';
 
 component top is
     generic (nbits : integer := 32);
@@ -32,7 +32,8 @@ process_clock: process
     clk <= '0';
 	wait for 5 ns;
 	clk <= '1';
-	wait for 5 ns;
+	wait for 5 ns; 
   end process process_clock;
 
+rst <= '0' after 50 ns;
 end TEST;

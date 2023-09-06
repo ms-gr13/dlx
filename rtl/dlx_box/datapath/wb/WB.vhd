@@ -47,8 +47,8 @@ architecture STRUCTURAL of writeBack is
     MUXWB: MUX21_GENERIC
     generic map(nbits)
     port map(
-        LMD_OUT,
         ALUREG_OUTPUT,
+        LMD_OUT,
         WB_MUX_SEL,
         DATAIN_RFsig
     );

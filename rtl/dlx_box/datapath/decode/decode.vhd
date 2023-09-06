@@ -20,7 +20,9 @@ entity decodeUnit is
         IR_OUT          : in  std_logic_vector(nbits-1 downto 0);
         A_out           : out std_logic_vector(nbits -1 downto 0);
         B_out           : out std_logic_vector(nbits -1 downto 0);
-        Imm_out         : out std_logic_vector(nbits -1 downto 0)
+        Imm_out         : out std_logic_vector(nbits -1 downto 0);
+        IR_IN2          : in  std_logic_vector(nbits-1 downto 0);
+        IR_OUT2         : out  std_logic_vector(nbits-1 downto 0)
         );
 
 end decodeUnit;
@@ -40,7 +42,9 @@ architecture STRUCTURAL of decodeUnit is
     signal RS2      : std_logic_vector(4 downto 0);
     signal WR_ADDR  : std_logic_vector(4 downto 0);
     signal datainRF : std_logic_vector(nbits-1 downto 0);
-
+    signal IR_OUTs  : std_logic_vector(nbits-1 downto 0);
+    signal IR_IN2s  : std_logic_vector(nbits-1 downto 0);
+    signal IR_OUT2s : std_logic_vector(nbits-1 downto 0);
 
     component register_generic is
         generic (nbits : integer := 16);
@@ -85,14 +89,18 @@ begin
     --CHECK THIS, I DONT HAVE ANY IDEA
     RS1       <= IR_OUT(25 downto 21);
     RS2       <= IR_OUT(20 downto 16);
-    WR_ADDR   <= IR_OUT(15 downto 11) when (IR_OUT(31 downto 26) = 0) else IR_OUT(20 downto 16); --When RTYPE --> 15 downto 11
-                                                                                                 --When ITYPE --> 20 downto 16
+    WR_ADDR   <= IR_IN2s(15 downto 11) when (IR_IN2s(31 downto 26) = 0) else IR_IN2s(20 downto 16); --When RTYPE --> 15 downto 1
+                                                                                               --When ITYPE --> 20 downto 16
+    IR_OUTs  <= IR_OUT;
+    IR_OUT2  <= IR_OUT2s;
+    IR_IN2s  <= IR_IN2;
     signExtIn <= IR_OUT(15 downto 0);
 
     A_out <= RegisterAout;
     B_out <= RegisterBout;
     Imm_out <= RegisterImmout;
-
+    datainRF <= DATAIN;
+    
     A : register_generic
         generic map(nbits)
         port map(
@@ -122,6 +130,16 @@ begin
             RegIMM_LATCH_EN,
             RegisterImmOut
             );
+
+    IR2: register_generic
+        generic map(nbits)
+        port map(
+            IR_OUTs,
+            clk,
+            rst,
+            '1',
+            IR_OUT2s
+        );
 
     Signext : SIGN_EXT
         generic map(bits)

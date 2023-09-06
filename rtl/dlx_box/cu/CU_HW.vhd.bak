@@ -50,8 +50,7 @@ end dlx_cu;
 
 architecture dlx_cu_hw of dlx_cu is
   type mem_array is array (integer range 0 to MICROCODE_MEM_SIZE - 1) of std_logic_vector(CW_SIZE - 1 downto 0);
-  signal cw_mem : mem_array := ("110000000001000",   --NOP
-                                "111101010000111", -- R type
+  signal cw_mem : mem_array := ("111101010000111", -- R type
                                 "111011110000111", -- I type
                                 "110100010001100", -- BEQZ
                                 "110100011001100", -- BNEZ
@@ -59,7 +58,8 @@ architecture dlx_cu_hw of dlx_cu is
                                 "110100010001100", -- JAL
                                 "111101000110111", -- LW
                                 "110000000000100", -- NOP
-                                "111001000110111"  -- SW
+                                "111001000110111",  -- SW
+                                "110000000000000"   --NOP
                                 );
                                 
                                 
@@ -69,14 +69,16 @@ architecture dlx_cu_hw of dlx_cu is
 
 
   -- control word is shifted to the correct stage
-  signal cw1 : std_logic_vector(CW_SIZE -1 downto 0); -- first stage (DECODE)
-  signal cw2 : std_logic_vector(CW_SIZE - 1 - 2 downto 0); -- second stage (EXECUTE)
-  signal cw3 : std_logic_vector(CW_SIZE - 1 - 5 downto 0); -- third stage (MEMORY)
-  signal cw4 : std_logic_vector(CW_SIZE - 1 - 9 downto 0); -- fourth stage (WB)
+  signal cw1 : std_logic_vector(CW_SIZE -1 downto 0); -- first stage
+  signal cw2 : std_logic_vector(CW_SIZE - 1 - 2 downto 0); -- second stage
+  signal cw3 : std_logic_vector(CW_SIZE - 1 - 5 downto 0); -- third stage
+  signal cw4 : std_logic_vector(CW_SIZE - 1 - 9 downto 0); -- fourth stage
+  signal cw5 : std_logic_vector(CW_SIZE -1 - 13 downto 0); -- fifth stage
 
   signal aluOpcode_i: aluOp := NOP; -- ALUOP defined in package
   signal aluOpcode1: aluOp := NOP;
   signal aluOpcode2: aluOp := NOP;
+  signal aluOpcode3: aluOp := NOP;
 
 
  
@@ -85,32 +87,33 @@ begin  -- dlx_cu_rtl
   IR_opcode(OP_CODE_SIZE-1 downto 0) <= IR_IN(31 downto 26);
   IR_func(10 downto 0)  <= IR_IN(FUNC_SIZE - 1 downto 0);
 
+  cw <= cw_mem(conv_integer(IR_opcode));
 
 
   -- stage one control signals
-  IR_LATCH_EN  <= '1';--cw1(CW_SIZE - 1);
-  NPC_LATCH_EN <= '1';--cw1(CW_SIZE - 2);
-  PC_LATCH_EN  <= '1';--cw1(CW_SIZE - 13);
+  IR_LATCH_EN  <= cw1(CW_SIZE - 1);
+  NPC_LATCH_EN <= cw1(CW_SIZE - 2);
+  PC_LATCH_EN  <= cw1(CW_SIZE - 13);
   -- stage two control signals
-  RegA_LATCH_EN   <= cw1(CW_SIZE - 3);
-  RegB_LATCH_EN   <= cw1(CW_SIZE - 4);
-  RegIMM_LATCH_EN <= cw1(CW_SIZE - 5);
+  RegA_LATCH_EN   <= cw2(CW_SIZE - 3);
+  RegB_LATCH_EN   <= cw2(CW_SIZE - 4);
+  RegIMM_LATCH_EN <= cw2(CW_SIZE - 5);
   
   -- stage three control signals
-  MUXA_SEL      <= cw2(CW_SIZE - 6);
-  MUXB_SEL      <= cw2(CW_SIZE - 7);
-  ALU_OUTREG_EN <= cw2(CW_SIZE - 8);
-  EQ_COND       <= cw2(CW_SIZE - 9);
+  MUXA_SEL      <= cw3(CW_SIZE - 6);
+  MUXB_SEL      <= cw3(CW_SIZE - 7);
+  ALU_OUTREG_EN <= cw3(CW_SIZE - 8);
+  EQ_COND       <= cw3(CW_SIZE - 9);
   
   -- stage four control signals
-  DRAM_WE      <= cw3(CW_SIZE - 10);
-  LMD_LATCH_EN <= cw3(CW_SIZE - 11);
-  JUMP_EN      <= cw3(CW_SIZE - 12);
+  DRAM_WE      <= cw4(CW_SIZE - 10);
+  LMD_LATCH_EN <= cw4(CW_SIZE - 11);
+  JUMP_EN      <= cw4(CW_SIZE - 12);
   
   
   -- stage five control signals
-  WB_MUX_SEL <= cw4(CW_SIZE - 14);
-  RF_WE      <= cw4(CW_SIZE - 15);
+  WB_MUX_SEL <= cw5(CW_SIZE - 14);
+  RF_WE      <= cw5(CW_SIZE - 15);
 
 
   -- process to pipeline control words
@@ -121,22 +124,24 @@ begin  -- dlx_cu_rtl
       cw2 <= (others => '0');
       cw3 <= (others => '0');
       cw4 <= (others => '0'); 
+      cw5 <= (others => '0');
       aluOpcode1 <= NOP;
       aluOpcode2 <= NOP;
+      aluOpcode3 <= NOP;
     elsif Clk'event and Clk = '1' then  -- rising clock edge
-      if (conv_integer(IR_IN) /= 0) then --!= 0
-        cw1 <= cw;
-        cw2 <= cw1(CW_SIZE - 1 - 2 downto 0);
-        cw3 <= cw2(CW_SIZE - 1 - 5 downto 0);
-        cw4 <= cw3(CW_SIZE - 1 - 9 downto 0);
+      cw1 <= cw;
+      cw2 <= cw1(CW_SIZE - 1 - 2 downto 0);
+      cw3 <= cw2(CW_SIZE - 1 - 5 downto 0);
+      cw4 <= cw3(CW_SIZE - 1 - 9 downto 0);
+      cw5 <= cw4(CW_SIZE -1 - 13 downto 0);
 
-        aluOpcode1 <= aluOpcode_i;
-        aluOpcode2 <= aluOpcode1;
-      end if;
+      aluOpcode1 <= aluOpcode_i;
+      aluOpcode2 <= aluOpcode1;
+      aluOpcode3 <= aluOpcode2;
     end if;
   end process CW_PIPE;
 
-  ALU_OPCODE <= aluOpcode2;
+  ALU_OPCODE <= aluOpcode3;
 
   -- purpose: Generation of ALU OpCode
   -- type   : combinational
@@ -147,7 +152,6 @@ begin  -- dlx_cu_rtl
 	case conv_integer(unsigned(IR_opcode)) is
 	        -- case of R type requires analysis of FUNC
 		when 0 =>
-      cw <= cw_mem(1); --RTYPE
 			case conv_integer(unsigned(IR_func)) is
         when 4 => aluOpcode_i <= LLS; -- sll according to instruction set coding
 				when 6 => aluOpcode_i <= LRS; -- srl
@@ -162,56 +166,19 @@ begin  -- dlx_cu_rtl
 				when others => aluOpcode_i <= NOP;
 			end case;
       -- not anymore R-type
-		when 2 => 
-              cw <= cw_mem(5);
-              aluOpcode_i <= NOP; -- j
-		when 3 => 
-              cw <= cw_mem(6);
-              aluOpcode_i <= NOP; -- jal
-    when 4 => 
-              cw <= cw_mem(3);
-              aluOpcode_i <= NOP; -- BEQZ
-    when 5 => 
-              cw <= cw_mem(4);
-              aluOpcode_i <= NOP; -- BNEZ
-		when 8 => 
-              cw <= cw_mem(2);
-              aluOpcode_i <= ADDS; -- addi
-    when 10 => 
-              cw <= cw_mem(2);
-              aluOpcode_i <= SUBS; --subi
-    when 12 => 
-              cw <= cw_mem(2);
-              aluOpcode_i <= ANDS; -- andi
-    when 13 => 
-              cw <= cw_mem(2);
-              aluOpcode_i <= ORS; --ori
-    when 14 => 
-              cw <= cw_mem(2);
-              aluOpcode_i <= XORS; --xori
-    when 20 => 
-              cw <= cw_mem(2);
-              aluOpcode_i <= LLS; --slli
-    when 22 => 
-              cw <= cw_mem(2);
-              aluOpcode_i <= LRS; --srli
-    when 23 => 
-              cw <= cw_mem(7);
-              aluOpcode_i <= NOP; -- lw 
-    when 25 => 
-              cw <= cw_mem(2);
-              aluOpcode_i <= SNES; -- snei
-    when 28 => 
-              cw <= cw_mem(2);
-              aluOpcode_i <= SLES; --slei
-    when 29 => 
-              cw <= cw_mem(2);
-              aluOpcode_i <= SGES; --sgei
-    when 43 => 
-              cw <= cw_mem(9);
-              aluOpcode_i <= NOP; -- sw
-		when others => 
-              aluOpcode_i <= NOP;
+		when 2 => aluOpcode_i <= NOP; -- j
+		when 3 => aluOpcode_i <= NOP; -- jal
+		when 8 => aluOpcode_i <= ADDS; -- addi
+    when 10 => aluOpcode_i <= SUBS; --subi
+    when 12 => aluOpcode_i <= ANDS; -- andi
+    when 13 => aluOpcode_i <= ORS; --ori
+    when 14 => aluOpcode_i <= XORS; --xori
+    when 20 => aluOpcode_i <= LLS; --slli
+    when 22 => aluOpcode_i <= LRS; --srli
+    when 25 => aluOpcode_i <= SNES; -- snei
+    when 28 => aluOpcode_i <= SLES; --slei
+    when 29 => aluOpcode_i <= SGES; --sgei
+		when others => aluOpcode_i <= NOP;
 	 end case;
 	end process ALU_OP_CODE_P;
 

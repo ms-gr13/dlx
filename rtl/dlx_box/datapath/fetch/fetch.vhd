@@ -26,7 +26,7 @@ end fetchUnit;
 architecture STRUCTURAL of fetchUnit is
     type mySignals is array (1 downto 0) of std_logic_vector(nbits-1 downto 0);
     signal sigVec : mySignals;
-    signal four   : std_logic_vector(nbits-1 downto 0);
+    signal one   : std_logic_vector(nbits-1 downto 0);
 
     component register_generic is
         generic (nbits : integer := 16);
@@ -50,7 +50,7 @@ architecture STRUCTURAL of fetchUnit is
 
 
 begin
-    four <= std_logic_vector(to_unsigned(4, nbits));
+    one <= std_logic_vector(to_unsigned(1, nbits));
     ADDRESS_IRAM <= sigVec(0);
 
 
@@ -58,7 +58,7 @@ begin
         generic map(nbits)
         port map(
             A  => sigVec(0),
-            B  => four,
+            B  => one,
             Ci => '0',
             S  => sigVec(1)
             );

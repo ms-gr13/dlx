@@ -9,7 +9,7 @@ fi
 asmfile=`echo $1 | sed s/[.].*//g`
 perl ./assembler.bin/dlxasm.pl -o $asmfile.bin -list $asmfile.list $1
 rm $asmfile.bin.hdr
-cat $asmfile.bin | hexdump -v -e '/1 "%02X" /1 "%02X" /1 "%02X" /1 "%02X\n"' > test.asm.mem
+cat $asmfile.bin | hexdump -v -e '/1 "%02X" /1 "%02X" /1 "%02X" /1 "%02X\n"' > ../rtl/mmu/iram/test.asm.mem
 #$asmfile\_dump.txt
 
-cp test.asm.mem ../rtl/mmu/iram
+#cp test.asm.mem ../rtl/mmu/iram
