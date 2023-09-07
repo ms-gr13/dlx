@@ -40,7 +40,7 @@ begin  -- IRam_Bhe
     variable index : integer := 0;
     variable tmp_data_u : std_logic_vector(I_SIZE-1 downto 0);
   begin  -- process FILL_MEM_P
-    if (Rst = '0') then
+   if falling_edge(Rst) then
       file_open(mem_fp,"/home/fede/Microelectronics/repo/dlx/rtl/mmu/iram/test.asm.mem",READ_MODE);
       while (not endfile(mem_fp)) loop
         readline(mem_fp,file_line);
@@ -50,6 +50,13 @@ begin  -- IRam_Bhe
       end loop;
     else file_close(mem_fp);
     end if;
+
+  if rising_edge(Rst) then --IF RESET WE RESET THE MEMORY
+    for i in 0 to RAM_DEPTH-1 loop
+        IRAM_mem(i) <= 0;
+    end loop;
+  end if;
+
   end process FILL_MEM_P;
 
 end IRam_Bhe;

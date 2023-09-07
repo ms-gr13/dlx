@@ -50,7 +50,7 @@ end dlx_cu;
 
 architecture dlx_cu_hw of dlx_cu is
   type mem_array is array (integer range 0 to MICROCODE_MEM_SIZE - 1) of std_logic_vector(CW_SIZE - 1 downto 0);
-  signal cw_mem : mem_array := ("110000000001000",   --NOP
+  signal cw_mem : mem_array := ("110000000000100",   --NOP
                                 "111101010000111", -- R type
                                 "111011110000111", -- I type
                                 "110100010001100", -- BEQZ
@@ -124,7 +124,7 @@ begin  -- dlx_cu_rtl
       aluOpcode1 <= NOP;
       aluOpcode2 <= NOP;
     elsif Clk'event and Clk = '1' then  -- rising clock edge
-      if (conv_integer(IR_IN) /= 0) then --!= 0
+     -- if (conv_integer(IR_IN) /= 0) then --!= 0
         cw1 <= cw;
         cw2 <= cw1(CW_SIZE - 1 - 2 downto 0);
         cw3 <= cw2(CW_SIZE - 1 - 5 downto 0);
@@ -132,7 +132,7 @@ begin  -- dlx_cu_rtl
 
         aluOpcode1 <= aluOpcode_i;
         aluOpcode2 <= aluOpcode1;
-      end if;
+    --  end if;
     end if;
   end process CW_PIPE;
 
@@ -144,10 +144,15 @@ begin  -- dlx_cu_rtl
   -- outputs: aluOpcode
    ALU_OP_CODE_P : process (IR_opcode, IR_func)
    begin  -- process ALU_OP_CODE_P
-	case conv_integer(unsigned(IR_opcode)) is
+	 
+   case conv_integer(unsigned(IR_opcode)) is
 	        -- case of R type requires analysis of FUNC
 		when 0 =>
-      cw <= cw_mem(1); --RTYPE
+      if (conv_integer(IR_IN) /= 0) then
+        cw <= cw_mem(1); --RTYPE
+      else 
+        cw <= cw_mem(0); --NOP
+      end if;
 			case conv_integer(unsigned(IR_func)) is
         when 4 => aluOpcode_i <= LLS; -- sll according to instruction set coding
 				when 6 => aluOpcode_i <= LRS; -- srl

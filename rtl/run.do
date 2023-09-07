@@ -22,7 +22,7 @@ sim:/tb_top/DLX_TOP/DLX_INST/DATA_PATH/DECODE/WR_ADDR \
 sim:/tb_top/DLX_TOP/DLX_INST/DATA_PATH/DECODE/datainRF \
 sim:/tb_top/DLX_TOP/DLX_INST/DATA_PATH/DECODE/IR_IN2s \
 sim:/tb_top/DLX_TOP/DLX_INST/DATA_PATH/DECODE/IR_OUT2s \
-sim:/tb_top/DLX_TOP/DLX_INST/DATA_PATH/DECODE/WR_ADDR
+sim:/tb_top/DLX_TOP/DLX_INST/DATA_PATH/DECODE/WR_ADDR 
 
 
 add wave -divider -height 30 "EXECUTE STAGE SIGNALS"
@@ -46,7 +46,11 @@ add wave -position insertpoint  \sim:/tb_top/DLX_TOP/DLX_INST/DATA_PATH/MEMORY/*
 add wave -divider -height 30 "WRITE BACK STAGE SIGNALS"
 add wave -position insertpoint  \sim:/tb_top/DLX_TOP/DLX_INST/DATA_PATH/WB/*
 
+add wave -position insertpoint  \
+sim:/tb_top/DLX_TOP/DLX_INST/DATA_PATH/RF_WE
+
 add wave -divider -height 30 "INTERIOR OF THE REGISTER FILE: "
+add wave -position insertpoint sim:/tb_top/DLX_TOP/DLX_INST/DATA_PATH/DECODE/RF/*
 add wave -position insertpoint  \
 sim:/tb_top/DLX_TOP/DLX_INST/DATA_PATH/DECODE/RF/REGISTERS(0) \
 sim:/tb_top/DLX_TOP/DLX_INST/DATA_PATH/DECODE/RF/REGISTERS(1) \
