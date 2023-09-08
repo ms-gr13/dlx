@@ -35,5 +35,5 @@ process_clock: process
 	wait for 5 ns; 
   end process process_clock;
 
-rst <= '0' after 50 ns;
+rst <= '0' after 45 ns;
 end TEST;

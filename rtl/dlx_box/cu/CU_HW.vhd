@@ -92,25 +92,25 @@ begin  -- dlx_cu_rtl
   NPC_LATCH_EN <= '1';--cw1(CW_SIZE - 2);
   PC_LATCH_EN  <= '1';--cw1(CW_SIZE - 13);
   -- stage two control signals
-  RegA_LATCH_EN   <= cw1(CW_SIZE - 3);
-  RegB_LATCH_EN   <= cw1(CW_SIZE - 4);
-  RegIMM_LATCH_EN <= cw1(CW_SIZE - 5);
+  RegA_LATCH_EN   <= cw(CW_SIZE - 3);
+  RegB_LATCH_EN   <= cw(CW_SIZE - 4);
+  RegIMM_LATCH_EN <= cw(CW_SIZE - 5);
   
   -- stage three control signals
-  MUXA_SEL      <= cw2(CW_SIZE - 6);
-  MUXB_SEL      <= cw2(CW_SIZE - 7);
-  ALU_OUTREG_EN <= cw2(CW_SIZE - 8);
-  EQ_COND       <= cw2(CW_SIZE - 9);
+  MUXA_SEL      <= cw1(CW_SIZE - 6);
+  MUXB_SEL      <= cw1(CW_SIZE - 7);
+  ALU_OUTREG_EN <= cw1(CW_SIZE - 8);
+  EQ_COND       <= cw1(CW_SIZE - 9);
   
   -- stage four control signals
-  DRAM_WE      <= cw3(CW_SIZE - 10);
-  LMD_LATCH_EN <= cw3(CW_SIZE - 11);
-  JUMP_EN      <= cw3(CW_SIZE - 12);
+  DRAM_WE      <= cw2(CW_SIZE - 10);
+  LMD_LATCH_EN <= cw2(CW_SIZE - 11);
+  JUMP_EN      <= cw2(CW_SIZE - 12);
   
   
   -- stage five control signals
-  WB_MUX_SEL <= cw4(CW_SIZE - 14);
-  RF_WE      <= cw4(CW_SIZE - 15);
+  WB_MUX_SEL <= cw3(CW_SIZE - 14);
+  RF_WE      <= cw3(CW_SIZE - 15);
 
 
   -- process to pipeline control words
@@ -136,7 +136,7 @@ begin  -- dlx_cu_rtl
     end if;
   end process CW_PIPE;
 
-  ALU_OPCODE <= aluOpcode2;
+  ALU_OPCODE <= aluOpcode1;
 
   -- purpose: Generation of ALU OpCode
   -- type   : combinational
@@ -216,6 +216,7 @@ begin  -- dlx_cu_rtl
               cw <= cw_mem(9);
               aluOpcode_i <= NOP; -- sw
 		when others => 
+              cw <= cw_mem(0);     --nop
               aluOpcode_i <= NOP;
 	 end case;
 	end process ALU_OP_CODE_P;

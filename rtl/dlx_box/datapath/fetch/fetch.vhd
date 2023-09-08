@@ -16,7 +16,8 @@ entity fetchUnit is
         PC_IN        : in  std_logic_vector(nbits-1 downto 0);
         ADDRESS_IRAM : out std_logic_vector(nbits - 1 downto 0);
         NPC_OUT      : out std_logic_vector(nbits -1 downto 0);
-        IR_OUT       : out std_logic_vector(nbits -1 downto 0)
+        IR_OUT       : out std_logic_vector(nbits -1 downto 0);
+        ADDERPC_OUT  : out std_logic_vector(nbits -1 downto 0)
 
         );
 
@@ -26,7 +27,7 @@ end fetchUnit;
 architecture STRUCTURAL of fetchUnit is
     type mySignals is array (1 downto 0) of std_logic_vector(nbits-1 downto 0);
     signal sigVec : mySignals;
-    signal one   : std_logic_vector(nbits-1 downto 0);
+    signal one          : std_logic_vector(nbits-1 downto 0);
 
     component register_generic is
         generic (nbits : integer := 16);
@@ -52,7 +53,7 @@ architecture STRUCTURAL of fetchUnit is
 begin
     one <= std_logic_vector(to_unsigned(1, nbits));
     ADDRESS_IRAM <= sigVec(0);
-
+    ADDERPC_OUT <= sigVec(1);
 
     ADD : RCA
         generic map(nbits)

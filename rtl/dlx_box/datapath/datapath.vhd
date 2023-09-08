@@ -72,7 +72,7 @@ architecture STRUCTURAL of datapath is
     signal IR_OUT2s           : std_logic_vector(nbits-1 downto 0);
     signal IR_OUT3s           : std_logic_vector(nbits-1 downto 0);
     signal IR_OUT4s           : std_logic_vector(nbits-1 downto 0);
-
+    signal ADDERPC_OUTs       : std_logic_vector(nbits -1 downto 0);
 
     component fetchUnit is
     generic (nbits : integer := 32);
@@ -87,7 +87,8 @@ architecture STRUCTURAL of datapath is
         PC_IN        : in  std_logic_vector(nbits-1 downto 0);
         ADDRESS_IRAM : out std_logic_vector(nbits - 1 downto 0);
         NPC_OUT      : out std_logic_vector(nbits -1 downto 0);
-        IR_OUT       : out std_logic_vector(nbits -1 downto 0)
+        IR_OUT       : out std_logic_vector(nbits -1 downto 0);
+        ADDERPC_OUT  : out std_logic_vector(nbits -1 downto 0)
         );
     end component;
 
@@ -180,7 +181,8 @@ begin
         TO_PC_OUTs,
         ADDRESS_IRAMs,
         NPC_OUTs,
-        IR_OUTs
+        IR_OUTs,
+        ADDERPC_OUTs
     );
 
     DECODE: decodeUnit
@@ -230,7 +232,7 @@ begin
         JUMP_EN,             
         DRAM_DATA,           
         ALUREG_OUTPUTs,       
-        NPC_OUTs,             
+        ADDERPC_OUTs,             
         COND_OUTs,            
         LMD_OUTs,            
         TO_PC_OUTs,
