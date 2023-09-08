@@ -15,6 +15,7 @@ nop
 nop
 nop
 add r2,r2,r3 
+add r15,r8,r7
 nop 
 nop
 addi r12,r1,#4

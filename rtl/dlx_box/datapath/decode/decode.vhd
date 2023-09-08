@@ -96,30 +96,30 @@ begin
     IR_IN2s  <= IR_IN2;
     signExtIn <= IR_OUT(15 downto 0);
 
-    A_out <= RegisterAout;
-    B_out <= RegisterBout;
+    A_out <= RF_out1;
+    B_out <= RF_out2;
     Imm_out <= RegisterImmout;
     datainRF <= DATAIN;
     
-    A : register_generic
-        generic map(nbits)
-        port map(
-            RF_out1,
-            clk,
-            rst,
-            RegA_LATCH_EN,
-            RegisterAout
-            );
+--    A : register_generic
+--        generic map(nbits)
+--        port map(
+--            RF_out1,
+--            clk,
+--            rst,
+--            RegA_LATCH_EN,
+--            RegisterAout
+--            );
 
-    B : register_generic
-        generic map(nbits)
-        port map(
-            RF_out2,
-            clk,
-            rst,
-            RegB_LATCH_EN,
-            RegisterBout
-            );
+--    B : register_generic
+--        generic map(nbits)
+--        port map(
+--            RF_out2,
+--            clk,
+--            rst,
+--            RegB_LATCH_EN,
+--            RegisterBout
+--            );
 
     Imm : register_generic
         generic map(nbits)
