@@ -53,13 +53,13 @@ architecture dlx_cu_hw of dlx_cu is
   signal cw_mem : mem_array := ("110000000000100",   --NOP
                                 "111101010000111", -- R type
                                 "111011110000111", -- I type
-                                "110100010001100", -- BEQZ
+                                "110100011001100", -- BEQZ
                                 "110100011001100", -- BNEZ
                                 "111011111001100", -- J (0X02) instruction encoding corresponds to the address to this ROM
                                 "110100010001100", -- JAL
-                                "111101000110111", -- LW
+                                "111111110010101", -- LW
                                 "110000000000100", -- NOP
-                                "111001000110111"  -- SW
+                                "111111110110100"  -- SW
                                 );
                                 
                                 
@@ -200,9 +200,9 @@ begin  -- dlx_cu_rtl
     when 22 => 
               cw <= cw_mem(2);
               aluOpcode_i <= LRS; --srli
-    when 23 => 
+    when 35 => 
               cw <= cw_mem(7);
-              aluOpcode_i <= NOP; -- lw 
+              aluOpcode_i <= ADDS; -- lw 
     when 25 => 
               cw <= cw_mem(2);
               aluOpcode_i <= SNES; -- snei
@@ -214,7 +214,7 @@ begin  -- dlx_cu_rtl
               aluOpcode_i <= SGES; --sgei
     when 43 => 
               cw <= cw_mem(9);
-              aluOpcode_i <= NOP; -- sw
+              aluOpcode_i <= ADDS; -- sw
 		when others => 
               cw <= cw_mem(0);     --nop
               aluOpcode_i <= NOP;

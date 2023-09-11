@@ -43,6 +43,7 @@ architecture STRUCTURAL of dlx is
     signal    MUXB_SEL_signal           : std_logic := '0';  -- MUX-B Sel
     signal    ALU_OUTREG_EN_signal      : std_logic := '0';  -- ALU Output Register Enable
     signal    EQ_COND_signal            : std_logic := '0';  -- Branch if (not) Equal to Zero
+
         -- ALU Operation Code
     signal    ALU_OPCODE_signal         : aluOp; -- choose between implicit or exlicit coding, like std_logic_vector(ALU_OPC_SIZE -1 downto 0);
         
@@ -200,8 +201,8 @@ architecture STRUCTURAL of dlx is
             LMD_LATCH_EN_signal,
             JUMP_EN_signal,
             WB_MUX_SEL_signal,
-            ADDRESS_DRAM_signal,    --THE OPERAND B HOLDS THE ADDRESS I THINK
-            DATAwrite_DRAM_signal,       --ALU_OUT IS THE DATA TO THE DRAM
+            DATAwrite_DRAM_signal,       
+            ADDRESS_DRAM_signal,
             ADDRESS_IRAM_signal,
             IR_OUT_signal
         );

@@ -32,6 +32,7 @@ sim:/tb_top/DLX_TOP/DLX_INST/DATA_PATH/EXECUTE/A_out \
 sim:/tb_top/DLX_TOP/DLX_INST/DATA_PATH/EXECUTE/B_out \
 sim:/tb_top/DLX_TOP/DLX_INST/DATA_PATH/EXECUTE/Imm_out \
 sim:/tb_top/DLX_TOP/DLX_INST/DATA_PATH/EXECUTE/ALUREG_OUTPUT \
+sim:/tb_top/DLX_TOP/DLX_INST/DATA_PATH/EXECUTE/B_outregs \
 sim:/tb_top/DLX_TOP/DLX_INST/DATA_PATH/EXECUTE/COND_OUT \
 sim:/tb_top/DLX_TOP/DLX_INST/DATA_PATH/EXECUTE/IR_IN3s \
 sim:/tb_top/DLX_TOP/DLX_INST/DATA_PATH/EXECUTE/IR_OUT3s
@@ -84,6 +85,18 @@ sim:/tb_top/DLX_TOP/DLX_INST/DATA_PATH/DECODE/RF/REGISTERS(28) \
 sim:/tb_top/DLX_TOP/DLX_INST/DATA_PATH/DECODE/RF/REGISTERS(29) \
 sim:/tb_top/DLX_TOP/DLX_INST/DATA_PATH/DECODE/RF/REGISTERS(30) \
 sim:/tb_top/DLX_TOP/DLX_INST/DATA_PATH/DECODE/RF/REGISTERS(31)
+
+add wave -divider -height 30 "DLX SIGNALS: "
+add wave -position insertpoint  \
+sim:/tb_top/DLX_TOP/DLX_INST/DATAread_DRAM_port \
+sim:/tb_top/DLX_TOP/DLX_INST/ADDRESS_DRAM_port \
+sim:/tb_top/DLX_TOP/DLX_INST/DATAwrite_DRAM_port \
+sim:/tb_top/DLX_TOP/DLX_INST/DRAM_WE_signal
+
+add wave -divider -height 30 "INTERIOR OF DATA MEMORY: "
+add wave -position insertpoint  \
+sim:/tb_top/DLX_TOP/D_DRAM/data_memory
+
 
 run 500 ns
 wave zoom full

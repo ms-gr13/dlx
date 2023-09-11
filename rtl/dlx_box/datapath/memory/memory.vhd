@@ -98,7 +98,7 @@ architecture STRUCTURAL of memoryUnit is
         MUX_PC: MUX21_GENERIC
         generic map (nbits)
         port map(
-            ALUREG_OUTPUT, --I PUT THIS FIRST BECAUSE IF SEL = '1' WE SELECT THE OUTPUT OF THE ALU
+            ALU_OUT2s, --I PUT THIS FIRST BECAUSE IF SEL = '1' WE SELECT THE OUTPUT OF THE ALU
             NPC_OUT,
             muxjmp_to_mux,
             TO_PC_OUTs 

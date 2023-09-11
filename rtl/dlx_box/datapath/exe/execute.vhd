@@ -33,7 +33,8 @@ entity executionUnit is
         ALUREG_OUTPUT     : out std_logic_vector(nbits -1 downto 0);
         COND_OUT          : out std_logic;  --to the selection bit of the mux in the mem stage
         IR_IN3            : in  std_logic_vector(nbits-1 downto 0);
-        IR_OUT3           : out  std_logic_vector(nbits-1 downto 0)
+        IR_OUT3           : out  std_logic_vector(nbits-1 downto 0);
+        B_outreg          : out  std_logic_vector(nbits -1 downto 0)
         );
 
 end executionUnit;
@@ -48,6 +49,7 @@ architecture STRUCTURAL of executionUnit is
     signal ZERO_DEC_OUT  : std_logic;
     signal IR_IN3s       : std_logic_vector(nbits-1 downto 0);
     signal IR_OUT3s      : std_logic_vector(nbits-1 downto 0);
+    signal B_outregs     : std_logic_vector(nbits -1 downto 0);
 
     component FD is
         port (D      : in  std_logic;
@@ -108,6 +110,7 @@ begin
     registerB_out <= B_out;
     IR_IN3s <= IR_IN3;
     IR_OUT3 <= IR_OUT3s;
+    B_outreg <= B_outregs;
 
     zerodec : ZERO_DEC
         generic map (nbits)
@@ -152,6 +155,16 @@ begin
             rst,
             '1',
             IR_OUT3s
+        );
+
+    B_outregister: register_generic
+        generic map(nbits)
+        port map(
+            registerB_out,
+            clk,
+            rst,
+            '1',
+            B_outregs
         );
 
     alu1 : ALU

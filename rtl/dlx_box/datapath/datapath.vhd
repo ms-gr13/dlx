@@ -59,9 +59,11 @@ architecture STRUCTURAL of datapath is
     signal A_outs        : std_logic_vector(nbits-1 downto 0) := (others => '0');
     signal B_outs        : std_logic_vector(nbits-1 downto 0) := (others => '0');
     signal Imm_outs      : std_logic_vector(nbits-1 downto 0) := (others => '0');
+    
 
     signal ALUREG_OUTPUTs     : std_logic_vector(nbits -1 downto 0) := (others => '0');
     signal COND_OUTs          : std_logic := '0';
+    signal B_outregs          : std_logic_vector(nbits - 1 downto 0);
 
     signal LMD_OUTs           : std_logic_vector(nbits -1 downto 0) := (others => '0'); 
     signal TO_PC_OUTs         : std_logic_vector(nbits -1 downto 0) := (others => '0');
@@ -129,7 +131,8 @@ architecture STRUCTURAL of datapath is
             ALUREG_OUTPUT       : out std_logic_vector(nbits -1 downto 0);
             COND_OUT            : out std_logic; --to the selection bit of the mux in the mem stage
             IR_IN3              : in  std_logic_vector(nbits-1 downto 0);
-            IR_OUT3             : out  std_logic_vector(nbits-1 downto 0)
+            IR_OUT3             : out  std_logic_vector(nbits-1 downto 0);
+            B_outreg            : out  std_logic_vector(nbits -1 downto 0)
             );
     end component;
 
@@ -165,7 +168,7 @@ architecture STRUCTURAL of datapath is
 
 begin
 
-    B <= B_outs;
+    B <= B_outregs;
     ALU_OUT <= ALUREG_OUTPUTS;
     ADDRESS_IRAM <= ADDRESS_IRAMS;
     IR_OUT <= IR_OUTs;
@@ -220,7 +223,8 @@ begin
         ALUREG_OUTPUTs,       
         COND_OUTs,
         IR_OUT2s,
-        IR_OUT3s         
+        IR_OUT3s,
+        B_outregs        
     );
 
     MEMORY: memoryUnit
