@@ -38,11 +38,11 @@ architecture behavioral of dram is
 begin
     process (clk)
     begin
-        if rising_edge(clk) then
+        if rising_edge(clk)  then 
             -- Memory operations are synchronized with the rising edge of the clock
-            if w_r = '1' then  -- Write operation
-                data_memory(to_integer(unsigned(addr))) <= data_in; -- Byte addressable in Big Endian
-            else  -- Read operation
+            if  w_r = '1' then  -- Write operation
+                data_memory(to_integer(unsigned(addr))) <= data_in; -- Byte addressable in Big Endian    
+            elsif (w_r = '0' and addr < "10000000" )then  -- Read operation, addr<128
                 data_out <= data_memory(to_integer(unsigned(addr))); -- Byte addressable in Big Endian
             end if;
         end if;

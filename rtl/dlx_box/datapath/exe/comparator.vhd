@@ -28,7 +28,7 @@ begin
       case func is
         when SGES =>
           if Cout = '1' then
-            set <= (others => '1');
+            set <= X"00000001";
           else
             set <= (others => '0');
           end if;
@@ -42,7 +42,7 @@ begin
           CoutInv := not Cout;
           t       := CoutInv xor z;
           if t = '1' then
-            set <= (others => '1');
+            set <= X"00000001";
           else
             set <= (others => '0');
           end if;
@@ -54,7 +54,7 @@ begin
             z := '0';
           end if;
           if z = '0' then
-            set <= (others => '1');
+            set <= X"00000001";
           else
             set <= (others => '0');
           end if;
