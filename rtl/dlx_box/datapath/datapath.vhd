@@ -147,7 +147,7 @@ architecture STRUCTURAL of datapath is
             ALUREG_OUTPUT       : in std_logic_vector(nbits -1 downto 0);
             NPC_OUT             : in std_logic_vector(nbits -1 downto 0);
             COND_OUT            : in std_logic;
-            LMD_OUT             : out std_logic_vector(nbits -1 downto 0);
+            DRAM_DATAout        : out std_logic_vector(nbits -1 downto 0); 
             TO_PC_OUT           : out std_logic_vector(nbits -1 downto 0);
             ALU_OUT2            : out std_logic_vector(nbits -1 downto 0);
             IR_IN4              : in  std_logic_vector(nbits-1 downto 0);

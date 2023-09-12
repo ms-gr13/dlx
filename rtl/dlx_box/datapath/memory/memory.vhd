@@ -26,7 +26,7 @@ entity memoryUnit is
         ALUREG_OUTPUT       : in std_logic_vector(nbits -1 downto 0);
         NPC_OUT             : in std_logic_vector(nbits -1 downto 0);
         COND_OUT            : in std_logic;
-        LMD_OUT             : out std_logic_vector(nbits -1 downto 0); 
+        DRAM_DATAout        : out std_logic_vector(nbits -1 downto 0); 
         TO_PC_OUT           : out std_logic_vector(nbits -1 downto 0);
         ALU_OUT2            : out std_logic_vector(nbits -1 downto 0);
         IR_IN4              : in  std_logic_vector(nbits-1 downto 0);
@@ -39,7 +39,6 @@ architecture STRUCTURAL of memoryUnit is
 
 
     signal muxjmp_to_mux : std_logic; 
-    signal LMD_OUTsig    : std_logic_vector(nbits -1 downto 0);
     signal TO_PC_OUTs    : std_logic_vector(nbits -1 downto 0) := (others => '0');
     signal ALU_OUT2s     : std_logic_vector(nbits -1 downto 0);
     signal IR_IN4s       : std_logic_vector(nbits-1 downto 0);
@@ -79,7 +78,7 @@ architecture STRUCTURAL of memoryUnit is
     
     begin
 
-        LMD_OUT <= LMD_OUTsig;
+        DRAM_DATAout <= DRAM_DATA;
         TO_PC_OUT <= TO_PC_OUTs;
         ALU_OUT2 <= ALU_OUT2s;
         IR_IN4s <= IR_IN4;
@@ -102,16 +101,6 @@ architecture STRUCTURAL of memoryUnit is
             NPC_OUT,
             muxjmp_to_mux,
             TO_PC_OUTs 
-        );
-
-        LMD : register_generic
-        generic map (nbits)
-        port map(
-            DRAM_DATA,
-            clk,
-            rst,
-            LMD_LATCH_EN,
-            LMD_OUTsig
         );
 
         ALU_OUT2r: register_generic
