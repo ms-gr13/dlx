@@ -53,8 +53,8 @@ architecture dlx_cu_hw of dlx_cu is
   signal cw_mem : mem_array := ("110000000000100",   --NOP
                                 "111101010000111", -- R type
                                 "111011110000111", -- I type
-                                "110100011001100", -- BEQZ
-                                "110100011001100", -- BNEZ
+                                "110111111001100", -- BEQZ
+                                "110111111001100", -- BNEZ
                                 "111011111001100", -- J (0X02) instruction encoding corresponds to the address to this ROM
                                 "110100010001100", -- JAL
                                 "111011110010101", -- LW
@@ -175,10 +175,10 @@ begin  -- dlx_cu_rtl
               aluOpcode_i <= NOP; -- jal
     when 4 => 
               cw <= cw_mem(3);
-              aluOpcode_i <= NOP; -- BEQZ
+              aluOpcode_i <= SUBS; -- BEQZ
     when 5 => 
               cw <= cw_mem(4);
-              aluOpcode_i <= NOP; -- BNEZ
+              aluOpcode_i <= SUBS; -- BNEZ
 		when 8 => 
               cw <= cw_mem(2);
               aluOpcode_i <= ADDS; -- addi
