@@ -262,6 +262,7 @@ line:
       if ($pass == 1) {
 	# set label value
 	$val{$1} = $addr{$section};
+
       }
     } elsif (/^[a-zA-Z]+/) {
       if ($pass == 1) {
@@ -504,16 +505,17 @@ sub forminstr {
   } elsif ($itype =~ /^b/) {
     if ($itype eq "b") {
       $src1 = &getreg ($a[1]);
-      $dst = &getimm ($a[2]);
+      $dst = (&getimm ($a[2])/4)-1;
     } else {	# b0 - branches w/o operands
       $src1 = 0;
-      $dst = &getimm ($a[1]);
+      $dst = (&getimm ($a[1])/4)-1;
 	   }
-    $dst -= $addr{t}+1;
+    $dst -= $addr{t}/4;
+      printf "IM PRINTING SOMETHING: $addr{t} \n";
     $out = ($op << 26) | ($src1 << 21) | ($dst & 0xffff);
   } elsif ($itype eq "j") {
     $dst = &getimm ($a[1]);
-    $dst -= $addr{t}+1;
+    $dst -= $addr{t}+4;
     $out = ($op << 26) | ($dst & 0x3ffffff);
   } elsif ($itype eq "jr") {
     $dst = &getreg ($a[1]);
