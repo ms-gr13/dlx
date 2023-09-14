@@ -22,7 +22,9 @@ entity decodeUnit is
         B_out           : out std_logic_vector(nbits -1 downto 0);
         Imm_out         : out std_logic_vector(nbits -1 downto 0);
         IR_IN2          : in  std_logic_vector(nbits-1 downto 0);
-        IR_OUT2         : out  std_logic_vector(nbits-1 downto 0)
+        IR_OUT2         : out  std_logic_vector(nbits-1 downto 0);
+        NPC_IN          : in std_logic_vector(nbits -1 downto 0);
+        NPC2_OUT       : out std_logic_vector(nbits -1 downto 0)
         );
 
 end decodeUnit;
@@ -45,6 +47,8 @@ architecture STRUCTURAL of decodeUnit is
     signal IR_OUTs  : std_logic_vector(nbits-1 downto 0);
     signal IR_IN2s  : std_logic_vector(nbits-1 downto 0);
     signal IR_OUT2s : std_logic_vector(nbits-1 downto 0);
+    signal NPC_INs  : std_logic_vector(nbits -1 downto 0);
+    signal NPC2_OUTs  : std_logic_vector(nbits -1 downto 0);
 
     component register_generic is
         generic (nbits : integer := 16);
@@ -100,16 +104,18 @@ begin
     B_out <= RF_out2;
     Imm_out <= RegisterImmout;
     datainRF <= DATAIN;
-    
---    A : register_generic
---        generic map(nbits)
---        port map(
---            RF_out1,
---            clk,
---            rst,
---            RegA_LATCH_EN,
---            RegisterAout
---            );
+    NPC_INs <= NPC_IN;
+    NPC2_OUT <= NPC2_OUTs;
+
+    NPC2 : register_generic
+        generic map(nbits)
+        port map(
+            NPC_INs,
+            clk,
+            rst,
+            '1',
+            NPC2_OUTs
+            );
 
 --    B : register_generic
 --        generic map(nbits)

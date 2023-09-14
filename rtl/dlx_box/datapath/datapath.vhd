@@ -75,6 +75,7 @@ architecture STRUCTURAL of datapath is
     signal IR_OUT3s           : std_logic_vector(nbits-1 downto 0);
     signal IR_OUT4s           : std_logic_vector(nbits-1 downto 0);
     signal ADDERPC_OUTs       : std_logic_vector(nbits -1 downto 0);
+    signal NPC2_OUTs          : std_logic_vector(nbits -1 downto 0);
 
     component fetchUnit is
     generic (nbits : integer := 32);
@@ -109,7 +110,9 @@ architecture STRUCTURAL of datapath is
         B_out           : out std_logic_vector(nbits -1 downto 0);
         Imm_out         : out std_logic_vector(nbits -1 downto 0);
         IR_IN2          : in  std_logic_vector(nbits-1 downto 0);
-        IR_OUT2         : out  std_logic_vector(nbits-1 downto 0)
+        IR_OUT2         : out  std_logic_vector(nbits-1 downto 0);
+        NPC_IN          : in std_logic_vector(nbits -1 downto 0);
+        NPC2_OUT        : out std_logic_vector(nbits -1 downto 0)
         );
 
     end component;
@@ -203,7 +206,9 @@ begin
         B_outs,
         Imm_outs,
         IR_OUT4s,
-        IR_OUT2s
+        IR_OUT2s,
+        NPC_OUTs,
+        NPC2_OUTs
     );
 
     EXECUTE: executionUnit
@@ -216,7 +221,7 @@ begin
         MUXB_SEL,            
         EQ_COND,         
         ALU_OPCODE, 
-        NPC_OUTs,             
+        NPC2_OUTs,            
         A_outs,               
         B_outs,               
         Imm_outs,             
