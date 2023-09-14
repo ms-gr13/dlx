@@ -97,6 +97,10 @@ add wave -divider -height 30 "INTERIOR OF DATA MEMORY: "
 add wave -position insertpoint  \
 sim:/tb_top/DLX_TOP/D_DRAM/data_memory
 
+add wave -divider -height 30 "INTERIOR OF INSTRUCTION MEMORY: "
+add wave -position insertpoint  \
+sim:/tb_top/DLX_TOP/I_RAM/IRAM_mem
+
 
 run 500 ns
 wave zoom full

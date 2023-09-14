@@ -509,11 +509,11 @@ sub forminstr {
       $src1 = 0;
       $dst = &getimm ($a[1]);
 	   }
-    $dst -= $addr{t} + 4;
+    $dst -= $addr{t}+1;
     $out = ($op << 26) | ($src1 << 21) | ($dst & 0xffff);
   } elsif ($itype eq "j") {
     $dst = &getimm ($a[1]);
-    $dst -= $addr{t} + 4;
+    $dst -= $addr{t}+1;
     $out = ($op << 26) | ($dst & 0x3ffffff);
   } elsif ($itype eq "jr") {
     $dst = &getreg ($a[1]);
