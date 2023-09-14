@@ -511,11 +511,10 @@ sub forminstr {
       $dst = (&getimm ($a[1])/4)-1;
 	   }
     $dst -= $addr{t}/4;
-      printf "IM PRINTING SOMETHING: $addr{t} \n";
     $out = ($op << 26) | ($src1 << 21) | ($dst & 0xffff);
   } elsif ($itype eq "j") {
-    $dst = &getimm ($a[1]);
-    $dst -= $addr{t}+4;
+    $dst = (&getimm ($a[1])/4)-2;
+    $dst -= ($addr{t}/4);
     $out = ($op << 26) | ($dst & 0x3ffffff);
   } elsif ($itype eq "jr") {
     $dst = &getreg ($a[1]);

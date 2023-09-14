@@ -4,6 +4,7 @@
 set -e
 
 #COMPILE DATAPATH
+vcom basic_elements/and2.vhd
 vcom dlx_box/datapath/myTypes.vhd
 vcom dlx_box/datapath/fetch/ffd.vhd
 vcom dlx_box/datapath/fetch/register_generic.vhd
