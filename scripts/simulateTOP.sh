@@ -13,19 +13,19 @@ vcom ../rtl/dlx_box/datapath/exe/lfsr.vhd
 vcom ../rtl/dlx_box/datapath/exe/fa.vhd
 vcom ../rtl/dlx_box/datapath/exe/rca.vhd
 vcom ../rtl/dlx_box/datapath/exe/csb.vhd
-vcom ../rtl/dlx_box/datapath/exe/SumGenerator.vhd
+vcom ../rtl/dlx_box/datapath/exe/sumGenerator.vhd
 vcom ../rtl/dlx_box/datapath/exe/pg.vhd
 vcom ../rtl/dlx_box/datapath/exe/g.vhd
 vcom ../rtl/dlx_box/datapath/exe/pg_generator.vhd
-vcom ../rtl/dlx_box/datapath/exe/CLA_SPARSE_TREE.vhd
+vcom ../rtl/dlx_box/datapath/exe/cla_sparse_tree.vhd
 vcom ../rtl/dlx_box/datapath/exe/xor.vhd
-vcom ../rtl/dlx_box/datapath/exe/P4_ADDER.vhd
+vcom ../rtl/dlx_box/datapath/exe/p4_adder.vhd
 vcom ../rtl/dlx_box/datapath/exe/ctrl_alu.vhd
 vcom ../rtl/dlx_box/datapath/exe/logic_and_shift.vhd
 vcom ../rtl/dlx_box/datapath/exe/comparator.vhd
 vcom ../rtl/dlx_box/datapath/exe/outputSelect.vhd
 vcom ../rtl/dlx_box/datapath/exe/alu_top.vhd 
-vcom ../rtl/dlx_box/datapath/exe/ZERO_DET.vhd
+vcom ../rtl/dlx_box/datapath/exe/zero_det.vhd
 vcom ../rtl/dlx_box/datapath/exe/xnor.vhd
 vcom ../rtl/dlx_box/datapath/exe/execute.vhd
 vcom ../rtl/dlx_box/datapath/memory.vhd
@@ -38,8 +38,8 @@ vcom ../rtl/dlx_box/cu/CU_HW.vhd
 #COMPILE DLX
 vcom ../rtl/dlx_box/dlx.vhd
 
-vcom ../rtl/mmu/dram/src/dram.vhd
-vcom ../rtl/mmu/iram/iram.vhd
+vcom ../rtl/mmu/dram.vhd
+vcom ../rtl/mmu/iram.vhd
 vcom ../rtl/topModule.vhd
 
 #COMPILE TESTBENCH
