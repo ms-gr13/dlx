@@ -36,6 +36,7 @@ vcom dlx_box/datapath/exe/outputSelect.vhd
 vcom dlx_box/datapath/exe/alu_top.vhd 
 vcom dlx_box/datapath/exe/ZERO_DET.vhd
 vcom dlx_box/datapath/exe/ffd.vhd
+vcom dlx_box/datapath/exe/xnor.vhd
 vcom dlx_box/datapath/exe/register_generic.vhd
 vcom dlx_box/datapath/exe/mux21generic.vhd
 vcom dlx_box/datapath/exe/execute.vhd

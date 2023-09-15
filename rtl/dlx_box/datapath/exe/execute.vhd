@@ -47,7 +47,7 @@ architecture STRUCTURAL of executionUnit is
     signal MUX1_OUT      : std_logic_vector(nbits -1 downto 0);
     signal MUX2_OUT      : std_logic_vector(nbits -1 downto 0);
     signal ZERO_DEC_OUT  : std_logic;
-    signal AND_OUT       : std_logic;
+    signal XNOR_OUT       : std_logic;
     signal IR_IN3s       : std_logic_vector(nbits-1 downto 0);
     signal IR_OUT3s      : std_logic_vector(nbits-1 downto 0);
     signal B_outregs     : std_logic_vector(nbits -1 downto 0);
@@ -94,7 +94,7 @@ architecture STRUCTURAL of executionUnit is
 
     end component;
 
-    component AND2 is
+    component XNOR_logic is
 	Port (	A:	In	std_logic;
 		B:	In	std_logic;
 		Y:	Out	std_logic);
@@ -182,16 +182,16 @@ begin
             ALU_output
             );
 
-    AND_2: AND2
+    XNOR_2: XNOR_logic
         port map(
             ZERO_DEC_OUT,
             COND_ENABLE,
-            AND_OUT
+            XNOR_OUT
         );
     
     COND : FD
         port map(
-            AND_OUT,
+            XNOR_OUT,
             clk,
             rst,
             '1',
