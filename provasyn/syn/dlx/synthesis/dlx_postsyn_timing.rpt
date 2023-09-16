@@ -7,7 +7,7 @@ Report : timing
         -max_paths 1
 Design : dlx
 Version: S-2021.06-SP4
-Date   : Sat Sep 16 22:34:50 2023
+Date   : Sat Sep 16 23:21:49 2023
 ****************************************
 
 Operating Conditions: typical   Library: NangateOpenCellLibrary

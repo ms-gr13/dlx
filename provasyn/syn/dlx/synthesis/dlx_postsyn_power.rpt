@@ -9,7 +9,7 @@ Report : power
         -analysis_effort low
 Design : dlx
 Version: S-2021.06-SP4
-Date   : Sat Sep 16 22:34:52 2023
+Date   : Sat Sep 16 23:21:51 2023
 ****************************************
 
 
@@ -35,12 +35,12 @@ Power-specific unit information :
     Leakage Power Units = 1nW
 
 
-  Cell Internal Power  = 674.2629 uW   (54%)
-  Net Switching Power  = 567.7832 uW   (46%)
+  Cell Internal Power  = 674.2341 uW   (54%)
+  Net Switching Power  = 567.7770 uW   (46%)
                          ---------
 Total Dynamic Power    =   1.2420 mW  (100%)
 
-Cell Leakage Power     = 291.0119 uW
+Cell Leakage Power     = 296.5758 uW
 
 Information: report_power power group summary does not include estimated clock tree power. (PWR-789)
 
@@ -52,8 +52,8 @@ memory             0.0000            0.0000            0.0000            0.0000 
 black_box          0.0000            0.0000            0.0000            0.0000  (   0.00%)
 clock_network      0.0000            0.0000            0.0000            0.0000  (   0.00%)
 register           0.0000            0.0000            0.0000            0.0000  (   0.00%)
-sequential       514.1935            9.2575        1.1360e+05          637.0489  (  41.55%)
-combinational    160.0713          558.5502        1.7741e+05          896.0134  (  58.45%)
+sequential       514.1935            9.2575        1.1360e+05          637.0489  (  41.40%)
+combinational    160.0427          558.5450        1.8298e+05          901.5441  (  58.60%)
 --------------------------------------------------------------------------------------------------
-Total            674.2648 uW       567.8076 uW     2.9101e+05 nW     1.5331e+03 uW
+Total            674.2362 uW       567.8025 uW     2.9658e+05 nW     1.5386e+03 uW
 1

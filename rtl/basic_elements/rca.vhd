@@ -27,7 +27,3 @@ begin
 
 end BEHAVIORAL;
 
-configuration CFG_RCA_BEHAVIORAL of RCA is
-  for BEHAVIORAL
-  end for;
-end CFG_RCA_BEHAVIORAL;
