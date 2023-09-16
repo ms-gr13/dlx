@@ -24,10 +24,10 @@ vcom ../rtl/dlx_box/datapath/exe/ctrl_alu.vhd
 vcom ../rtl/dlx_box/datapath/exe/logic_and_shift.vhd
 vcom ../rtl/dlx_box/datapath/exe/comparator.vhd
 vcom ../rtl/dlx_box/datapath/exe/outputSelect.vhd
-vcom ../rtl/dlx_box/datapath/exe/alu_top.vhd 
+vcom ../rtl/dlx_box/datapath/exe/alu.vhd 
 vcom ../rtl/dlx_box/datapath/exe/zero_det.vhd
 vcom ../rtl/dlx_box/datapath/exe/xnor.vhd
-vcom ../rtl/dlx_box/datapath/exe/execute.vhd
+vcom ../rtl/dlx_box/datapath/exe/executionUnit.vhd
 vcom ../rtl/dlx_box/datapath/memory.vhd
 vcom ../rtl/dlx_box/datapath/WB.vhd
 vcom ../rtl/dlx_box/datapath/datapath.vhd

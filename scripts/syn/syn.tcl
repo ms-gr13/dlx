@@ -5,7 +5,7 @@
 ######################################################################
 
 # SOURCE SETUP FILE
-source "./scripts/syn/synopsys_dc.setup"
+source "./scripts/syn/.synopsys_dc.setup"
 
 # SUPPRESS WARNING MESSAGES
 suppress_message MWLIBP-319
@@ -32,7 +32,7 @@ suppress_message RTDC-126
 ######################################################################
 
 # DEFINE CIRCUITS and WORK DIRS
-set blockName "topModule"
+set blockName "dlx"
 set active_design $blockName
 
 
@@ -48,11 +48,11 @@ if {![file exists $dirname]} {
 	file mkdir $dirname
 }
 
-set libDir "./syn/${active_design}/synthesis/synlib"
-file mkdir $libDir
+#set libDir "./syn/${active_design}/synthesis/synlib"
+#file mkdir $libDir
 
 
-define_design_lib $active_design -path $libDir
+#define_design_lib $active_design -path $libDir
 
 # Read all the files
 set compileFile "./scripts/syn/compile.f"
@@ -69,14 +69,15 @@ close $compileFileId
 #set HdlFileList [glob -dir "./rtl/${active_design}/verilog" "*.v*"]
 foreach hdlFile $HdlFileList {
 	if {[file extension $hdlFile]==".v"} {
-		analyze -format verilog  -library $active_design $hdlFile
+		analyze -format verilog  -library WORK $hdlFile
    } elseif {[file extension $hdlFile]==".vhd"} {
-		analyze -format vhdl -library $active_design $hdlFile
+		analyze -format vhdl -library WORK $hdlFile
     }
 }
 
 # ELABORATE DESIGN
-elaborate -lib $active_design $active_design
+#elaborate -lib $active_design $active_design
+elaborate $active_design -architecture STRUCTURAL -library WORK
 
 # Compile the design using exact mapping
 compile -exact_map
@@ -107,6 +108,9 @@ report_timing > $timing_rpt
 # POWER REPORT
 report_power > $power_rpt
 
+link
+
+
 ######################################################################
 ##
 ## SAVE DESIGN
@@ -123,5 +127,5 @@ write -format verilog -hierarchy -output "${dirname}/${active_design}_postsyn.v"
 ##
 ######################################################################
 
-exec rm -rf $libDir
+#exec rm -rf $libDir
 exit

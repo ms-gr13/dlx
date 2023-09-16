@@ -25,15 +25,12 @@
 ./rtl/dlx_box/datapath/exe/logic_and_shift.vhd
 ./rtl/dlx_box/datapath/exe/comparator.vhd
 ./rtl/dlx_box/datapath/exe/outputSelect.vhd
-./rtl/dlx_box/datapath/exe/alu_top.vhd 
+./rtl/dlx_box/datapath/exe/alu.vhd 
 ./rtl/dlx_box/datapath/exe/zero_det.vhd
 ./rtl/dlx_box/datapath/exe/xnor.vhd
-./rtl/dlx_box/datapath/exe/execute.vhd
+./rtl/dlx_box/datapath/exe/executionUnit.vhd
 ./rtl/dlx_box/datapath/memory.vhd
 ./rtl/dlx_box/datapath/WB.vhd
 ./rtl/dlx_box/datapath/datapath.vhd
 ./rtl/dlx_box/cu/CU_HW.vhd
 ./rtl/dlx_box/dlx.vhd
-./rtl/mmu/dram.vhd
-./rtl/mmu/iram.vhd
-./rtl/topModule.vhd

@@ -1,0 +1,30 @@
+Information: Building the design 'IRAM' instantiated from design 'top' with
+	the parameters "RAM_DEPTH=48,I_SIZE=32". (HDL-193)
+Warning: Cannot find the design 'IRAM' in the library 'WORK'. (LBR-1)
+Information: Building the design 'dram' instantiated from design 'top' with
+	the parameters "D_WIDTH=32,ADDR_WIDTH=32". (HDL-193)
+Warning: Cannot find the design 'dram' in the library 'WORK'. (LBR-1)
+Information: Building the design 'alu' instantiated from design 'executionUnit_nbits32' with
+	the parameters "nbits=32". (HDL-193)
+Warning: Cannot find the design 'alu' in the library 'WORK'. (LBR-1)
+Warning: Unable to resolve reference 'IRAM' in 'top'. (LINK-5)
+Warning: Unable to resolve reference 'dram' in 'top'. (LINK-5)
+Warning: Unable to resolve reference 'alu' in 'executionUnit_nbits32'. (LINK-5)
+Warning: Design 'top' has '3' unresolved references. For more detailed information, use the "link" command. (UID-341)
+Information: Updating design information... (UID-85)
+ 
+****************************************
+Report : timing
+        -path full
+        -delay max
+        -max_paths 1
+Design : top
+Version: S-2021.06-SP4
+Date   : Sat Sep 16 15:00:30 2023
+****************************************
+
+Operating Conditions: typical   Library: NangateOpenCellLibrary
+Wire Load Model Mode: top
+No paths.
+
+1

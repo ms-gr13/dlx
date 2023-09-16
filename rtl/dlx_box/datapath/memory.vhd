@@ -85,7 +85,7 @@ architecture STRUCTURAL of memoryUnit is
         IR_OUT4 <= IR_OUT4s;
 
         JUMPMUX: MUX21  --MUX21 STD_LOGIC
-        generic map (1)
+        --generic map (1)
         port map(
             COND_OUT,
             '0',
