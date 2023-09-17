@@ -1,6 +1,10 @@
 #@ # 
 #@ # Running dc_shell Version S-2021.06-SP4 for linux64 -- Nov 23, 2021
+<<<<<<< HEAD
 #@ # Date:   Sun Sep 17 18:54:26 2023
+=======
+#@ # Date:   Sat Sep 16 23:10:11 2023
+>>>>>>> ec79f2eef4f4036a904e894eae184ef7a16fbb7a
 #@ # Run by: ms23.13@localhost.localdomain
 #@ 
 
@@ -44444,6 +44448,7 @@ gui_start
 #@ # -- End source /eda/synopsys/2021-22/RHELx86/SYN_2021.06-SP4/auxx/tcllib/lib/iwidgets4.1/watch.itk
 
 gui_set_pref_value -category {SelectByNamePalette} -key {ObjectType} -value {LeafCells}
+<<<<<<< HEAD
 analyze -library WORK -format vhdl {and2.vhd constants.vhd mux21generic.vhd mux21.vhd ffd.vhd myTypes.vhd register_generic.vhd rca.vhd fetch.vhd signExtend.vhd RegisterFile.vhd decode.vhd lfsr.vhd csb.vhd sumGenerator.vhd pg.vhd g.vhd pg_generator.vhd cla_sparse_tree.vhd xor.vhd p4_adder.vhd ctrl_alu.vhd logic_and_shift.vhd comparator.vhd outputSelect.vhd alu.vhd zero_det.vhd xnor.vhd executionUnit.vhd memory.vhd WB.vhd datapath.vhd CU_HW.vhd dlx.vhd}
 elaborate dlx -architecture STRUCTURAL -library WORK
 create_clock -name "Clk_port" -period 2.5 Clk_port
@@ -44455,3 +44460,91 @@ change_selection [get_cells dlx]
 change_selection [get_cells DATA_PATH]
 change_selection [get_cells DATA_PATH/MEMORY]
 change_selection [get_cells DATA_PATH/MEMORY/ALU_OUT2r]
+=======
+source .synopsys_dc.setup
+#@ # -- Starting source .synopsys_dc.setup
+
+#@ #                                                                                                                                                              
+#@ #               ".synopsys_dc.setup" Initialization File for                                                                                                   
+#@ #                                                                                                                                                              
+#@ #                   Dc_Shell and Design_Analyzer                                                                                                               
+#@ #                                                                                                                                                              
+#@ #       Default configurations will be used set in the installation                                                                                            
+#@ #       dir .synopsys_dc.detup file, except from the directives given below                                                                                    
+#@ #                                                                                                                                                              
+#@ 
+#@ #SynopsysInstall = get_unix_variable(SYNOPSYS);                                                                                                                
+#@ 
+#@ set search_path  { .       \                                                                                                                                   
+#@         /home/mariagrazia.graziano/do/libnangate }                                                                                                             
+#@ 
+#@ 
+#@ # ================================================= #                                                                                                          
+#@ # Define a work library in the current project dir  #                                                                                                          
+#@ # to hold temporaryinclude files and keep the project area #                                                                                                   
+#@ # uncluttered. Note: You must create a subdirectory #                                                                                                          
+#@ # in your project directory called WORK. Des. Comp. #                                                                                                          
+#@ # will not create this directory for you.           #                                                                                                          
+#@ # ================================================= #                                                                                                          
+#@ 
+#@ define_design_lib -path ./work WORK                                                                                                                           
+#@ 
+#@ # ================================================= #                                                                                                          
+#@ # General configuration settings.                   #                                                                                                          
+#@ # ================================================= #                                                                                                          
+#@ 
+#@ # usign standard configuration in installation dir                                                                                                             
+#@ 
+#@ set hdlin_enable_configurations "true"                                                                                                                         
+#@ set power_preserve_rtl_hier_names "true" 
+#@ 
+#@ # ================================================= #                                                                                                          
+#@ # Set the link, target and synthetic library        #                                                                                                          
+#@ # variables. Use synlibs (with the -fc switch) to   #                                                                                                          
+#@ # determine the link and target library settings.   #                                                                                                          
+#@ # You may like to copy this file to your project    #                                                                                                          
+#@ # directory and append the output of synlibs.       #                                                                                                          
+#@ 
+#@ set link_library  {NangateOpenCellLibrary_typical_ecsm.db}                                                                                                     
+#@ 
+#@ set target_library  {NangateOpenCellLibrary_typical_ecsm.db} 
+#@ # -- End source .synopsys_dc.setup
+
+analyze -format vhdl -library WORK {and2.vhd constants.vhd ffd.vhd mux21generic.vhd mux21.vhd myTypes.vhd rca.vhd register_generic.vhd fetch.vhd signExtend.vhd RegisterFile.vhd decode.vhd lfsr.vhd fa.vhd rca.vhd csb.vhd sumGenerator.vhd pg.vhd g.vhd pg_generator.vhd cla_sparse_tree.vhd xor.vhd p4_adder.vhd ctrl_alu.vhd logic_and_shift.vhd comparator.vhd outputSelect.vhd alu.vhd zero_det.vhd xnor.vhd executionUnit.vhd memory.vhd WB.vhd datapath.vhd CU_HW.vhd dlx.vhd}
+elaborate dlx -architecture STRUCTURAL -library WORK
+LINK
+compile -exact_map
+# DEFINE CIRCUITS and WORK DIRS
+set blockName "dlx"
+set active_design $blockName
+# DEFINE WORK DIRS
+set dirname "./syn/${active_design}"
+if {![file exists $dirname]} {
+	file mkdir $dirname
+}
+set dirname "./syn/${active_design}/synthesis"
+if {![file exists $dirname]} {
+	file mkdir $dirname
+}
+# SET REPORT FILE NAME
+set timing_noclk_rpt "${dirname}/${active_design}_postsyn_timing.rpt"
+set timing_rpt "${dirname}/${active_design}_postsyn_timing.rpt"
+set power_rpt "${dirname}/${active_design}_postsyn_power.rpt"
+set clk_rpt "${dirname}/${active_design}_postsyn_timing.rpt"
+# Generate a timing report without constraints
+report_timing > $timing_noclk_rpt
+# Create a clock named 'CLK' with a period of 2ns
+create_clock -name "CLK" -period 2.5 CLK
+# Report the properties of the clock just created
+report_clock > $clk_rpt
+# Compile the design again after clock creation
+compile
+# TIMING REPORT
+report_timing > $timing_rpt
+# POWER REPORT
+report_power > $power_rpt
+# Write the post-synthesis VHDL netlist to the file 'PostSynthRegFileWindowing.vhdl'
+write -format vhdl    -hierarchy -output "${dirname}/${active_design}_postsyn.vhd"
+write -format verilog -hierarchy -output "${dirname}/${active_design}_postsyn.v"
+link
+>>>>>>> ec79f2eef4f4036a904e894eae184ef7a16fbb7a

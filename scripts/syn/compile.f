@@ -11,8 +11,6 @@
 ./rtl/dlx_box/datapath/decode/RegisterFile.vhd
 ./rtl/dlx_box/datapath/decode/decode.vhd
 ./rtl/dlx_box/datapath/exe/lfsr.vhd
-./rtl/dlx_box/datapath/exe/fa.vhd
-./rtl/dlx_box/datapath/exe/rca.vhd
 ./rtl/dlx_box/datapath/exe/csb.vhd
 ./rtl/dlx_box/datapath/exe/sumGenerator.vhd
 ./rtl/dlx_box/datapath/exe/pg.vhd

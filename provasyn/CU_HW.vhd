@@ -50,6 +50,20 @@ end dlx_cu;
 
 architecture dlx_cu_hw of dlx_cu is
   type mem_array is array (integer range 0 to MICROCODE_MEM_SIZE - 1) of std_logic_vector(CW_SIZE - 1 downto 0);
+<<<<<<< HEAD
+=======
+  signal cw_mem : mem_array := ("110000000000100",   --NOP
+                                "111101010000111", -- R type
+                                "111011110000111", -- I type
+                                "110110111001100", -- BEQZ
+                                "110110110001100", -- BNEZ
+                                "111011111001100", -- J (0X02) instruction encoding corresponds to the address to this ROM
+                                "110100010001100", -- JAL
+                                "111011110010101", -- LW
+                                "110000000000100", -- NOP
+                                "111111110110100"  -- SW
+                                );
+>>>>>>> ec79f2eef4f4036a904e894eae184ef7a16fbb7a
                                 
                                 
   signal IR_opcode : std_logic_vector(OP_CODE_SIZE -1 downto 0);  -- OpCode part of IR
@@ -66,6 +80,7 @@ architecture dlx_cu_hw of dlx_cu is
   signal aluOpcode_i: aluOp := NOP; -- ALUOP defined in package
   signal aluOpcode1: aluOp := NOP;
   signal aluOpcode2: aluOp := NOP;
+<<<<<<< HEAD
   signal IR_LATCH_ENs        :  std_logic;  
   signal NPC_LATCH_ENs       :  std_logic;
   signal RegA_LATCH_ENs      :  std_logic;
@@ -138,6 +153,42 @@ begin  -- dlx_cu_rtl
   -- stage five control signals
   WB_MUX_SELs <= cw3(CW_SIZE - 14);
   RF_WEs      <= cw3(CW_SIZE - 15);
+=======
+
+
+ 
+begin  -- dlx_cu_rtl
+
+  IR_opcode(OP_CODE_SIZE-1 downto 0) <= IR_IN(31 downto 26);
+  IR_func(10 downto 0)  <= IR_IN(FUNC_SIZE - 1 downto 0);
+
+
+
+  -- stage one control signals
+  IR_LATCH_EN  <= '1';--cw1(CW_SIZE - 1);
+  NPC_LATCH_EN <= '1';--cw1(CW_SIZE - 2);
+  PC_LATCH_EN  <= '1';--cw1(CW_SIZE - 13);
+  -- stage two control signals
+  RegA_LATCH_EN   <= cw(CW_SIZE - 3);
+  RegB_LATCH_EN   <= cw(CW_SIZE - 4);
+  RegIMM_LATCH_EN <= cw(CW_SIZE - 5);
+  
+  -- stage three control signals
+  MUXA_SEL      <= cw1(CW_SIZE - 6);
+  MUXB_SEL      <= cw1(CW_SIZE - 7);
+  ALU_OUTREG_EN <= cw1(CW_SIZE - 8);
+  EQ_COND       <= cw1(CW_SIZE - 9);
+  
+  -- stage four control signals
+  DRAM_WE      <= cw2(CW_SIZE - 10);
+  LMD_LATCH_EN <= cw2(CW_SIZE - 11);
+  JUMP_EN      <= cw2(CW_SIZE - 12);
+  
+  
+  -- stage five control signals
+  WB_MUX_SEL <= cw3(CW_SIZE - 14);
+  RF_WE      <= cw3(CW_SIZE - 15);
+>>>>>>> ec79f2eef4f4036a904e894eae184ef7a16fbb7a
 
 
   -- process to pipeline control words

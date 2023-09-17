@@ -20,6 +20,7 @@ entity dlx is
 end dlx;
 
 architecture STRUCTURAL of dlx is
+<<<<<<< HEAD
     signal clk_signal                   : std_logic;
     signal rst_signal                   : std_logic;
     signal DATAread_DRAM_signal             : std_logic_vector(nbits -1 downto 0);
@@ -43,11 +44,37 @@ architecture STRUCTURAL of dlx is
     signal    MUXB_SEL_signal           : std_logic ;  -- MUX-B Sel
     signal    ALU_OUTREG_EN_signal      : std_logic ;  -- ALU Output Register Enable
     signal    EQ_COND_signal            : std_logic ;  -- Branch if (not) Equal to Zero
+=======
+    signal clk_signal                   : std_logic := '0';
+    signal rst_signal                   : std_logic := '0';
+    signal DATAread_DRAM_signal             : std_logic_vector(nbits -1 downto 0) := (others => '0');
+    signal DATAwrite_DRAM_signal            : std_logic_vector(nbits -1 downto 0) := (others => '0');
+    signal ADDRESS_DRAM_signal          : std_logic_vector(nbits -1 downto 0) := (others => '0');
+        --IRAM:
+    signal ADDRESS_IRAM_signal          : std_logic_vector(nbits - 1 downto 0) := (others => '0');
+    signal DATA_IRAM_signal             : std_logic_vector(nbits - 1 downto 0) := (others => '0');    
+    -- CONTROL UNIT:
+    signal    IR_OUT_signal                : std_logic_vector(nbits - 1 downto 0) := (others => '0');
+    signal    IR_LATCH_EN_signal        : std_logic := '0';  -- Instruction Register Latch Enable
+    signal    NPC_LATCH_EN_signal       : std_logic := '0';
+                                            -- NextProgramCounter Register Latch Enable
+        -- ID Control Signals
+    signal    RegA_LATCH_EN_signal      : std_logic := '0';  -- Register A Latch Enable
+    signal    RegB_LATCH_EN_signal      : std_logic := '0';  -- Register B Latch Enable
+    signal    RegIMM_LATCH_EN_signal    : std_logic := '0';  -- Immediate Register Latch Enable
+
+        -- EX Control Signals
+    signal    MUXA_SEL_signal           : std_logic := '0';  -- MUX-A Sel
+    signal    MUXB_SEL_signal           : std_logic := '0';  -- MUX-B Sel
+    signal    ALU_OUTREG_EN_signal      : std_logic := '0';  -- ALU Output Register Enable
+    signal    EQ_COND_signal            : std_logic := '0';  -- Branch if (not) Equal to Zero
+>>>>>>> ec79f2eef4f4036a904e894eae184ef7a16fbb7a
 
         -- ALU Operation Code
     signal    ALU_OPCODE_signal         : aluOp; -- choose between implicit or exlicit coding, like std_logic_vector(ALU_OPC_SIZE -1 downto 0);
         
         -- MEM Control Signals
+<<<<<<< HEAD
     signal    DRAM_WE_signal            : std_logic ;  -- Data RAM Write Enable
     signal    LMD_LATCH_EN_signal       : std_logic ;  -- LMD Register Latch Enable
     signal    JUMP_EN_signal            : std_logic ;  -- JUMP Enable Signal for PC input MUX
@@ -56,6 +83,16 @@ architecture STRUCTURAL of dlx is
         -- WB Control signals
     signal    WB_MUX_SEL_signal         : std_logic ;  -- Write Back MUX Sel
     signal    RF_WE_signal              : std_logic ;  -- Register File Write Enable
+=======
+    signal    DRAM_WE_signal            : std_logic := '0';  -- Data RAM Write Enable
+    signal    LMD_LATCH_EN_signal       : std_logic := '0';  -- LMD Register Latch Enable
+    signal    JUMP_EN_signal            : std_logic := '0';  -- JUMP Enable Signal for PC input MUX
+    signal    PC_LATCH_EN_signal        : std_logic := '0';  -- Program Counte Latch Enable
+
+        -- WB Control signals
+    signal    WB_MUX_SEL_signal         : std_logic := '0';  -- Write Back MUX Sel
+    signal    RF_WE_signal              : std_logic := '0';  -- Register File Write Enable
+>>>>>>> ec79f2eef4f4036a904e894eae184ef7a16fbb7a
 
 
     component datapath is
@@ -208,4 +245,8 @@ architecture STRUCTURAL of dlx is
         );
 
 end STRUCTURAL;
+<<<<<<< HEAD
         
+=======
+        
+>>>>>>> ec79f2eef4f4036a904e894eae184ef7a16fbb7a

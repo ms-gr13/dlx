@@ -51,7 +51,7 @@ architecture STRUCTURAL of fetchUnit is
 
 
 begin
-    one <= std_logic_vector(to_unsigned(1, nbits));
+    one <= "00000000000000000000000000000001";
     ADDRESS_IRAM <= sigVec(0);
     ADDERPC_OUT <= sigVec(1);
 
