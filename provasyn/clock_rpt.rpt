@@ -1,0 +1,21 @@
+Information: Updating graph... (UID-83)
+ 
+****************************************
+Report : clocks
+Design : dlx
+Version: S-2021.06-SP4
+Date   : Sun Sep 17 18:50:46 2023
+****************************************
+
+Attributes:
+    d - dont_touch_network
+    f - fix_hold
+    p - propagated_clock
+    G - generated_clock
+    g - lib_generated_clock
+
+Clock          Period   Waveform            Attrs     Sources
+--------------------------------------------------------------------------------
+Clk_port         2.50   {0 1.25}                      {Clk_port}
+--------------------------------------------------------------------------------
+1

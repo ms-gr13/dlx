@@ -48,11 +48,11 @@ if {![file exists $dirname]} {
 	file mkdir $dirname
 }
 
-#set libDir "./syn/${active_design}/synthesis/synlib"
-#file mkdir $libDir
+set libDir "./syn/${active_design}/synthesis/synlib"
+file mkdir $libDir
 
 
-#define_design_lib $active_design -path $libDir
+define_design_lib $active_design -path $libDir
 
 # Read all the files
 set compileFile "./scripts/syn/compile.f"
@@ -74,6 +74,8 @@ foreach hdlFile $HdlFileList {
 		analyze -format vhdl -library WORK $hdlFile
     }
 }
+
+analyze -format vhdl -library WORK {./rtl/dlx_box/datapath/exe/alu.vhd} 
 
 # ELABORATE DESIGN
 #elaborate -lib $active_design $active_design
@@ -127,5 +129,5 @@ write -format verilog -hierarchy -output "${dirname}/${active_design}_postsyn.v"
 ##
 ######################################################################
 
-#exec rm -rf $libDir
+exec rm -rf $libDir
 exit

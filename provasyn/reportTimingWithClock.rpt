@@ -1,0 +1,131 @@
+Information: Updating design information... (UID-85)
+Warning: Design 'dlx' contains 1 high-fanout nets. A fanout number of 1000 will be used for delay calculations involving these nets. (TIM-134)
+ 
+****************************************
+Report : timing
+        -path full
+        -delay max
+        -max_paths 1
+Design : dlx
+Version: S-2021.06-SP4
+Date   : Sun Sep 17 18:52:32 2023
+****************************************
+
+ # A fanout number of 1000 was used for high fanout net computations.
+
+Operating Conditions: typical   Library: NangateOpenCellLibrary
+Wire Load Model Mode: top
+
+  Startpoint: DATA_PATH/FETCH/PC/FF_0/Q_reg
+              (rising edge-triggered flip-flop clocked by Clk_port)
+  Endpoint: DATA_PATH/FETCH/PC/FF_31/Q_reg
+            (rising edge-triggered flip-flop clocked by Clk_port)
+  Path Group: Clk_port
+  Path Type: max
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  dlx                5K_hvratio_1_1        NangateOpenCellLibrary
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock Clk_port (rise edge)                              0.00       0.00
+  clock network delay (ideal)                             0.00       0.00
+  DATA_PATH/FETCH/PC/FF_0/Q_reg/CK (SDFFR_X1)             0.00 #     0.00 r
+  DATA_PATH/FETCH/PC/FF_0/Q_reg/Q (SDFFR_X1)              0.07       0.07 r
+  DATA_PATH/FETCH/PC/FF_0/Q (FD_352)                      0.00       0.07 r
+  DATA_PATH/FETCH/PC/data_out[0] (register_generic_nbits32_0)
+                                                          0.00       0.07 r
+  DATA_PATH/FETCH/ADD/A[0] (RCA_NBITS32)                  0.00       0.07 r
+  DATA_PATH/FETCH/ADD/U85/ZN (AND2_X1)                    0.04       0.12 r
+  DATA_PATH/FETCH/ADD/U71/ZN (NAND2_X1)                   0.03       0.14 f
+  DATA_PATH/FETCH/ADD/U33/ZN (NAND2_X1)                   0.03       0.17 r
+  DATA_PATH/FETCH/ADD/U30/ZN (NOR2_X1)                    0.02       0.19 f
+  DATA_PATH/FETCH/ADD/U29/ZN (NOR2_X1)                    0.03       0.23 r
+  DATA_PATH/FETCH/ADD/U197/ZN (AOI21_X1)                  0.03       0.25 f
+  DATA_PATH/FETCH/ADD/U228/ZN (INV_X1)                    0.02       0.28 r
+  DATA_PATH/FETCH/ADD/U227/ZN (OAI21_X1)                  0.03       0.31 f
+  DATA_PATH/FETCH/ADD/U11/ZN (OAI21_X1)                   0.05       0.37 r
+  DATA_PATH/FETCH/ADD/U10/ZN (AOI21_X1)                   0.04       0.41 f
+  DATA_PATH/FETCH/ADD/U5/ZN (AOI21_X1)                    0.05       0.46 r
+  DATA_PATH/FETCH/ADD/U15/ZN (AND2_X1)                    0.04       0.51 r
+  DATA_PATH/FETCH/ADD/U16/ZN (OR2_X1)                     0.03       0.54 r
+  DATA_PATH/FETCH/ADD/U20/ZN (NAND2_X1)                   0.03       0.57 f
+  DATA_PATH/FETCH/ADD/U19/ZN (NOR2_X1)                    0.03       0.60 r
+  DATA_PATH/FETCH/ADD/U59/ZN (OR2_X1)                     0.03       0.64 r
+  DATA_PATH/FETCH/ADD/U230/ZN (AOI21_X1)                  0.03       0.66 f
+  DATA_PATH/FETCH/ADD/U80/ZN (AOI21_X1)                   0.05       0.71 r
+  DATA_PATH/FETCH/ADD/U82/ZN (AND2_X1)                    0.04       0.76 r
+  DATA_PATH/FETCH/ADD/U74/ZN (OR2_X1)                     0.04       0.80 r
+  DATA_PATH/FETCH/ADD/U222/ZN (AOI21_X1)                  0.04       0.83 f
+  DATA_PATH/FETCH/ADD/U57/ZN (AOI21_X1)                   0.06       0.89 r
+  DATA_PATH/FETCH/ADD/U263/ZN (AOI21_X1)                  0.03       0.92 f
+  DATA_PATH/FETCH/ADD/U61/ZN (NOR2_X1)                    0.04       0.96 r
+  DATA_PATH/FETCH/ADD/U232/ZN (AOI21_X1)                  0.03       0.99 f
+  DATA_PATH/FETCH/ADD/U52/ZN (AOI21_X1)                   0.05       1.05 r
+  DATA_PATH/FETCH/ADD/U262/ZN (AND2_X1)                   0.04       1.09 r
+  DATA_PATH/FETCH/ADD/U261/ZN (OAI22_X1)                  0.04       1.12 f
+  DATA_PATH/FETCH/ADD/U217/ZN (NOR2_X1)                   0.04       1.16 r
+  DATA_PATH/FETCH/ADD/U218/ZN (OAI22_X1)                  0.04       1.20 f
+  DATA_PATH/FETCH/ADD/U259/ZN (OAI21_X1)                  0.04       1.24 r
+  DATA_PATH/FETCH/ADD/U225/ZN (INV_X1)                    0.03       1.27 f
+  DATA_PATH/FETCH/ADD/U46/ZN (OAI21_X1)                   0.05       1.32 r
+  DATA_PATH/FETCH/ADD/U69/ZN (AND2_X1)                    0.04       1.36 r
+  DATA_PATH/FETCH/ADD/U70/ZN (NOR2_X1)                    0.02       1.39 f
+  DATA_PATH/FETCH/ADD/U2/ZN (OAI21_X2)                    0.05       1.44 r
+  DATA_PATH/FETCH/ADD/U241/ZN (AOI21_X1)                  0.04       1.48 f
+  DATA_PATH/FETCH/ADD/U239/ZN (OAI21_X1)                  0.05       1.53 r
+  DATA_PATH/FETCH/ADD/U257/ZN (INV_X1)                    0.02       1.55 f
+  DATA_PATH/FETCH/ADD/U95/ZN (OAI21_X1)                   0.04       1.60 r
+  DATA_PATH/FETCH/ADD/U216/ZN (INV_X1)                    0.02       1.62 f
+  DATA_PATH/FETCH/ADD/U106/ZN (OAI21_X1)                  0.04       1.66 r
+  DATA_PATH/FETCH/ADD/U238/ZN (INV_X1)                    0.02       1.69 f
+  DATA_PATH/FETCH/ADD/U40/ZN (OAI21_X1)                   0.04       1.73 r
+  DATA_PATH/FETCH/ADD/U256/ZN (INV_X1)                    0.02       1.76 f
+  DATA_PATH/FETCH/ADD/U42/ZN (OAI21_X1)                   0.04       1.80 r
+  DATA_PATH/FETCH/ADD/U254/ZN (INV_X1)                    0.02       1.83 f
+  DATA_PATH/FETCH/ADD/U44/ZN (OAI21_X1)                   0.04       1.87 r
+  DATA_PATH/FETCH/ADD/U243/ZN (INV_X1)                    0.02       1.89 f
+  DATA_PATH/FETCH/ADD/U48/ZN (OAI21_X1)                   0.04       1.94 r
+  DATA_PATH/FETCH/ADD/U215/ZN (INV_X1)                    0.02       1.96 f
+  DATA_PATH/FETCH/ADD/U38/ZN (OAI21_X1)                   0.04       2.01 r
+  DATA_PATH/FETCH/ADD/U214/ZN (AOI21_X1)                  0.03       2.04 f
+  DATA_PATH/FETCH/ADD/U237/ZN (INV_X1)                    0.03       2.07 r
+  DATA_PATH/FETCH/ADD/U223/ZN (OAI21_X1)                  0.03       2.10 f
+  DATA_PATH/FETCH/ADD/U253/ZN (INV_X1)                    0.03       2.13 r
+  DATA_PATH/FETCH/ADD/U229/ZN (AOI21_X1)                  0.03       2.16 f
+  DATA_PATH/FETCH/ADD/U50/ZN (AOI21_X1)                   0.06       2.21 r
+  DATA_PATH/FETCH/ADD/U104/ZN (XNOR2_X1)                  0.06       2.28 r
+  DATA_PATH/FETCH/ADD/U103/ZN (XNOR2_X1)                  0.04       2.31 f
+  DATA_PATH/FETCH/ADD/S[31] (RCA_NBITS32)                 0.00       2.31 f
+  DATA_PATH/FETCH/ADDERPC_OUT[31] (fetchUnit_nbits32)     0.00       2.31 f
+  DATA_PATH/MEMORY/NPC_OUT[31] (memoryUnit_nbits32)       0.00       2.31 f
+  DATA_PATH/MEMORY/MUX_PC/B[31] (MUX21_GENERIC_bits32_2)
+                                                          0.00       2.31 f
+  DATA_PATH/MEMORY/MUX_PC/U69/ZN (AOI22_X1)               0.06       2.37 r
+  DATA_PATH/MEMORY/MUX_PC/U70/ZN (INV_X1)                 0.02       2.39 f
+  DATA_PATH/MEMORY/MUX_PC/Y[31] (MUX21_GENERIC_bits32_2)
+                                                          0.00       2.39 f
+  DATA_PATH/MEMORY/TO_PC_OUT[31] (memoryUnit_nbits32)     0.00       2.39 f
+  DATA_PATH/FETCH/PC_IN[31] (fetchUnit_nbits32)           0.00       2.39 f
+  DATA_PATH/FETCH/PC/data_in[31] (register_generic_nbits32_0)
+                                                          0.00       2.39 f
+  DATA_PATH/FETCH/PC/FF_31/D (FD_321)                     0.00       2.39 f
+  DATA_PATH/FETCH/PC/FF_31/U5/ZN (NAND2_X1)               0.03       2.42 r
+  DATA_PATH/FETCH/PC/FF_31/U4/ZN (NAND2_X1)               0.02       2.44 f
+  DATA_PATH/FETCH/PC/FF_31/Q_reg/D (DFFR_X1)              0.01       2.45 f
+  data arrival time                                                  2.45
+
+  clock Clk_port (rise edge)                              2.50       2.50
+  clock network delay (ideal)                             0.00       2.50
+  DATA_PATH/FETCH/PC/FF_31/Q_reg/CK (DFFR_X1)             0.00       2.50 r
+  library setup time                                     -0.04       2.46
+  data required time                                                 2.46
+  --------------------------------------------------------------------------
+  data required time                                                 2.46
+  data arrival time                                                 -2.45
+  --------------------------------------------------------------------------
+  slack (MET)                                                        0.01
+
+
+1
