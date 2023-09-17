@@ -10,8 +10,8 @@ vcom ../rtl/dlx_box/datapath/decode/signExtend.vhd
 vcom ../rtl/dlx_box/datapath/decode/RegisterFile.vhd
 vcom ../rtl/dlx_box/datapath/decode/decode.vhd
 vcom ../rtl/dlx_box/datapath/exe/lfsr.vhd
-vcom ../rtl/dlx_box/datapath/exe/fa.vhd
-vcom ../rtl/dlx_box/datapath/exe/rca.vhd
+#vcom ../rtl/dlx_box/datapath/exe/fa.vhd
+#vcom ../rtl/dlx_box/datapath/exe/rca.vhd
 vcom ../rtl/dlx_box/datapath/exe/csb.vhd
 vcom ../rtl/dlx_box/datapath/exe/sumGenerator.vhd
 vcom ../rtl/dlx_box/datapath/exe/pg.vhd

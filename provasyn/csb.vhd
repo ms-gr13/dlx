@@ -45,12 +45,12 @@ architecture STRUCTURAL of CarrySelect is
 
 begin
   --Instantiate the 2 RCA:
-  RCA1 : entity work.RCA(BEHAVIORAL)
+  RCA1 : RCA
     generic map (NBITS => NBITS)
     port map (A, B, CI0, sum1);
 
 
-  RCA2 : entity work.RCA(BEHAVIORAL)
+  RCA2 : RCA
     generic map (NBITS => NBITS)
     port map (A, B, CI1, sum2);
 
