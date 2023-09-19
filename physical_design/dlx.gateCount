@@ -1,0 +1,28 @@
+Gate area 0.7980 um^2
+Level 0 Module dlx                                      Gates=     16587 Cells=    6642 Area=   13236.4 um^2
+Level 1 Module CONTROL_UNIT                             Gates=267        Cells=126      Area=     213.1 um^2
+Level 1 Module DATA_PATH                                Gates=16316      Cells=6513     Area=   13020.4 um^2
+Level 2 Module DATA_PATH/FETCH                          Gates=950        Cells=374      Area=     758.4 um^2
+Level 3 Module DATA_PATH/FETCH/ADD                      Gates=171        Cells=134      Area=     137.0 um^2
+Level 3 Module DATA_PATH/FETCH/PC                       Gates=248        Cells=67       Area=     197.9 um^2
+Level 3 Module DATA_PATH/FETCH/IR                       Gates=273        Cells=95       Area=     218.4 um^2
+Level 3 Module DATA_PATH/FETCH/NPC                      Gates=257        Cells=78       Area=     205.1 um^2
+Level 2 Module DATA_PATH/DECODE                         Gates=11399      Cells=3922     Area=    9096.4 um^2
+Level 3 Module DATA_PATH/DECODE/NPC2                    Gates=247        Cells=68       Area=     197.4 um^2
+Level 3 Module DATA_PATH/DECODE/Imm                     Gates=322        Cells=130      Area=     257.2 um^2
+Level 3 Module DATA_PATH/DECODE/IR2                     Gates=265        Cells=90       Area=     211.7 um^2
+Level 3 Module DATA_PATH/DECODE/RF                      Gates=10547      Cells=3621     Area=    8416.5 um^2
+Level 2 Module DATA_PATH/EXECUTE                        Gates=3318       Cells=1962     Area=    2648.0 um^2
+Level 3 Module DATA_PATH/EXECUTE/ALUoutput              Gates=322        Cells=130      Area=     257.5 um^2
+Level 3 Module DATA_PATH/EXECUTE/IR3                    Gates=246        Cells=66       Area=     196.6 um^2
+Level 3 Module DATA_PATH/EXECUTE/B_outregister          Gates=260        Cells=84       Area=     208.0 um^2
+Level 3 Module DATA_PATH/EXECUTE/alu1                   Gates=2350       Cells=1600     Area=    1875.8 um^2
+Level 4 Module DATA_PATH/EXECUTE/alu1/SELOUT            Gates=109        Cells=75       Area=      87.5 um^2
+Level 4 Module DATA_PATH/EXECUTE/alu1/CTRLALU           Gates=143        Cells=142      Area=     114.6 um^2
+Level 4 Module DATA_PATH/EXECUTE/alu1/ADDER_SUB         Gates=955        Cells=703      Area=     762.1 um^2
+Level 5 Module DATA_PATH/EXECUTE/alu1/ADDER_SUB/SUM_GEN Gates=672        Cells=504      Area=     536.3 um^2
+Level 5 Module DATA_PATH/EXECUTE/alu1/ADDER_SUB/CLA     Gates=216        Cells=165      Area=     172.9 um^2
+Level 4 Module DATA_PATH/EXECUTE/alu1/LOGIC_SHIFT       Gates=1112       Cells=659      Area=     887.9 um^2
+Level 5 Module DATA_PATH/EXECUTE/alu1/LOGIC_SHIFT/srl_39 Gates=307        Cells=198      Area=     245.5 um^2
+Level 5 Module DATA_PATH/EXECUTE/alu1/LOGIC_SHIFT/sll_37 Gates=414        Cells=224      Area=     330.6 um^2
+Level 2 Module DATA_PATH/MEMORY                         Gates=576        Cells=207      Area=     460.2 um^2
