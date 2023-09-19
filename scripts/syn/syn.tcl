@@ -42,7 +42,6 @@ if {![file exists $dirname]} {
 	file mkdir $dirname
 }
 
-
 set dirname "./syn/${active_design}/synthesis"
 if {![file exists $dirname]} {
 	file mkdir $dirname
@@ -50,10 +49,15 @@ if {![file exists $dirname]} {
 
 set libDir "./syn/${active_design}/synthesis/synlib"
 file mkdir $libDir
-
-
 define_design_lib $active_design -path $libDir
 
+
+set projectDir "./rtl/dlx_box"
+set file_extension ".vhd"
+set command "find $projectDir -type f -name *$file_extension -exec cp {} $dirname \;"
+exec $command
+
+#copia il file compile nella nuova cartella e eseguilo
 # Read all the files
 set compileFile "./scripts/syn/compile.f"
 set compileFileId [open $compileFile r]
@@ -110,9 +114,6 @@ report_timing > $timing_rpt
 # POWER REPORT
 report_power > $power_rpt
 
-link
-
-
 ######################################################################
 ##
 ## SAVE DESIGN
@@ -122,7 +123,7 @@ link
 # Write the post-synthesis VHDL netlist to the file 'PostSynthRegFileWindowing.vhdl'
 write -format vhdl    -hierarchy -output "${dirname}/${active_design}_postsyn.vhd"
 write -format verilog -hierarchy -output "${dirname}/${active_design}_postsyn.v"
-
+write_sdc "${dirname}/${active_design}.sdc"
 ######################################################################
 ##
 ## CLEAN & EXIT
@@ -131,3 +132,5 @@ write -format verilog -hierarchy -output "${dirname}/${active_design}_postsyn.v"
 
 exec rm -rf $libDir
 exit
+
+
