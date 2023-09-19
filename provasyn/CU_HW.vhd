@@ -50,6 +50,8 @@ end dlx_cu;
 
 architecture dlx_cu_hw of dlx_cu is
   type mem_array is array (integer range 0 to MICROCODE_MEM_SIZE - 1) of std_logic_vector(CW_SIZE - 1 downto 0);
+<<<<<<< HEAD
+=======
   signal cw_mem : mem_array := ("110000000000100",   --NOP
                                 "111101010000111", -- R type
                                 "111011110000111", -- I type
@@ -61,6 +63,7 @@ architecture dlx_cu_hw of dlx_cu is
                                 "110000000000100", -- NOP
                                 "111111110110100"  -- SW
                                 );
+>>>>>>> ec79f2eef4f4036a904e894eae184ef7a16fbb7a
                                 
                                 
   signal IR_opcode : std_logic_vector(OP_CODE_SIZE -1 downto 0);  -- OpCode part of IR
@@ -77,6 +80,80 @@ architecture dlx_cu_hw of dlx_cu is
   signal aluOpcode_i: aluOp := NOP; -- ALUOP defined in package
   signal aluOpcode1: aluOp := NOP;
   signal aluOpcode2: aluOp := NOP;
+<<<<<<< HEAD
+  signal IR_LATCH_ENs        :  std_logic;  
+  signal NPC_LATCH_ENs       :  std_logic;
+  signal RegA_LATCH_ENs      :  std_logic;
+  signal RegB_LATCH_ENs      :  std_logic;  
+  signal RegIMM_LATCH_ENs    :  std_logic;
+  signal MUXA_SELs           :  std_logic;  
+  signal MUXB_SELs           :  std_logic;  
+  signal ALU_OUTREG_ENs      :  std_logic;  
+  signal EQ_CONDs            :  std_logic;  
+  signal DRAM_WEs            :  std_logic;  
+  signal LMD_LATCH_ENs       :  std_logic;  
+  signal JUMP_ENs            :  std_logic;  
+  signal PC_LATCH_ENs        :  std_logic;  
+  signal WB_MUX_SELs         :  std_logic;  
+  signal RF_WEs              :  std_logic;  
+  signal cw_mem              :  mem_array;
+ 
+begin  -- dlx_cu_rtl
+                     cw_mem  <= ("110000000000100",   --NOP
+                                "111101010000111", -- R type
+                                "111011110000111", -- I type
+                                "110110111001100", -- BEQZ
+                                "110110110001100", -- BNEZ
+                                "111011111001100", -- J (0X02) instruction encoding corresponds to the address to this ROM
+                                "110100010001100", -- JAL
+                                "111011110010101", -- LW
+                                "110000000000100", -- NOP
+                                "111111110110100"  -- SW
+                                );
+  IR_opcode(OP_CODE_SIZE-1 downto 0) <= IR_IN(31 downto 26);
+  IR_func(10 downto 0)  <= IR_IN(FUNC_SIZE - 1 downto 0);
+
+  IR_LATCH_EN    <= IR_LATCH_ENs;    
+  NPC_LATCH_EN   <= NPC_LATCH_ENs;   
+  RegA_LATCH_EN  <= RegA_LATCH_ENs;  
+  RegB_LATCH_EN  <= RegB_LATCH_ENs;  
+  RegIMM_LATCH_EN <= RegIMM_LATCH_ENs;
+  MUXA_SEL       <= MUXA_SELs;       
+  MUXB_SEL       <= MUXB_SELs;       
+  ALU_OUTREG_EN  <= ALU_OUTREG_ENs;  
+  EQ_COND        <= EQ_CONDs;           
+  DRAM_WE        <= DRAM_WEs;        
+  LMD_LATCH_EN   <= LMD_LATCH_ENs;   
+  JUMP_EN        <= JUMP_ENs;        
+  PC_LATCH_EN    <= PC_LATCH_ENs;    
+  WB_MUX_SEL     <= WB_MUX_SELs;     
+  RF_WE          <= RF_WEs;          
+
+  -- stage one control signals
+  IR_LATCH_ENs  <= '1';--cw1(CW_SIZE - 1);
+  NPC_LATCH_ENs <= '1';--cw1(CW_SIZE - 2);
+  PC_LATCH_ENs  <= '1';--cw1(CW_SIZE - 13);
+  -- stage two control signals
+  RegA_LATCH_ENs   <= cw(CW_SIZE - 3);
+  RegB_LATCH_ENs   <= cw(CW_SIZE - 4);
+  RegIMM_LATCH_ENs <= cw(CW_SIZE - 5);
+  
+  -- stage three control signals
+  MUXA_SELs      <= cw1(CW_SIZE - 6);
+  MUXB_SELs      <= cw1(CW_SIZE - 7);
+  ALU_OUTREG_ENs <= cw1(CW_SIZE - 8);
+  EQ_CONDs       <= cw1(CW_SIZE - 9);
+  
+  -- stage four control signals
+  DRAM_WEs      <= cw2(CW_SIZE - 10);
+  LMD_LATCH_ENs <= cw2(CW_SIZE - 11);
+  JUMP_ENs      <= cw2(CW_SIZE - 12);
+  
+  
+  -- stage five control signals
+  WB_MUX_SELs <= cw3(CW_SIZE - 14);
+  RF_WEs      <= cw3(CW_SIZE - 15);
+=======
 
 
  
@@ -111,6 +188,7 @@ begin  -- dlx_cu_rtl
   -- stage five control signals
   WB_MUX_SEL <= cw3(CW_SIZE - 14);
   RF_WE      <= cw3(CW_SIZE - 15);
+>>>>>>> ec79f2eef4f4036a904e894eae184ef7a16fbb7a
 
 
   -- process to pipeline control words

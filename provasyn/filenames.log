@@ -270,6 +270,16 @@
 /eda/synopsys/2021-22/RHELx86/SYN_2021.06-SP4/auxx/gui/dv/dv_path_cat_view.tcl
 /eda/synopsys/2021-22/RHELx86/SYN_2021.06-SP4/auxx/gui/common/table/table.tcl
 /eda/synopsys/2021-22/RHELx86/SYN_2021.06-SP4/auxx/gui/common/table/table_internal.tcl
+<<<<<<< HEAD
+/home/ms23.13/dlx/provasyn/and2.vhd
+/home/ms23.13/dlx/provasyn/constants.vhd
+/home/ms23.13/dlx/provasyn/mux21generic.vhd
+/home/ms23.13/dlx/provasyn/mux21.vhd
+/home/ms23.13/dlx/provasyn/ffd.vhd
+/home/ms23.13/dlx/provasyn/myTypes.vhd
+/home/ms23.13/dlx/provasyn/register_generic.vhd
+/home/ms23.13/dlx/provasyn/rca.vhd
+=======
 /home/ms23.13/dlx/provasyn/.synopsys_dc.setup
 /home/ms23.13/dlx/provasyn/and2.vhd
 /home/ms23.13/dlx/provasyn/constants.vhd
@@ -279,13 +289,17 @@
 /home/ms23.13/dlx/provasyn/myTypes.vhd
 /home/ms23.13/dlx/provasyn/rca.vhd
 /home/ms23.13/dlx/provasyn/register_generic.vhd
+>>>>>>> ec79f2eef4f4036a904e894eae184ef7a16fbb7a
 /home/ms23.13/dlx/provasyn/fetch.vhd
 /home/ms23.13/dlx/provasyn/signExtend.vhd
 /home/ms23.13/dlx/provasyn/RegisterFile.vhd
 /home/ms23.13/dlx/provasyn/decode.vhd
 /home/ms23.13/dlx/provasyn/lfsr.vhd
+<<<<<<< HEAD
+=======
 /home/ms23.13/dlx/provasyn/fa.vhd
 /home/ms23.13/dlx/provasyn/rca.vhd
+>>>>>>> ec79f2eef4f4036a904e894eae184ef7a16fbb7a
 /home/ms23.13/dlx/provasyn/csb.vhd
 /home/ms23.13/dlx/provasyn/sumGenerator.vhd
 /home/ms23.13/dlx/provasyn/pg.vhd
@@ -311,5 +325,8 @@
 /eda/synopsys/2021-22/RHELx86/SYN_2021.06-SP4/libraries/syn/gtech.db
 /eda/synopsys/2021-22/RHELx86/SYN_2021.06-SP4/libraries/syn/standard.sldb
 /home/mariagrazia.graziano/do/libnangate/NangateOpenCellLibrary_typical_ecsm.db
+<<<<<<< HEAD
+=======
 /home/mariagrazia.graziano/do/libnangate/NangateOpenCellLibrary_typical_ecsm.db
 /home/mariagrazia.graziano/do/libnangate/NangateOpenCellLibrary_typical_ecsm.db
+>>>>>>> ec79f2eef4f4036a904e894eae184ef7a16fbb7a
