@@ -5,7 +5,7 @@
 ######################################################################
 
 # SOURCE SETUP FILE
-source "./scripts/syn/.synopsys_dc.setup"
+source "./.synopsys_dc.setup"
 
 # SUPPRESS WARNING MESSAGES
 suppress_message MWLIBP-319
@@ -32,62 +32,55 @@ suppress_message RTDC-126
 ######################################################################
 
 # DEFINE CIRCUITS and WORK DIRS
-set blockName "dlx"
-set active_design $blockName
+#set blockName "dlx"
+set active_design "dlx"
 
 
 # DEFINE WORK DIRS
-set dirname "./syn/${active_design}"
+set dirname "./results/"
 if {![file exists $dirname]} {
 	file mkdir $dirname
 }
 
-set dirname "./syn/${active_design}/synthesis"
-if {![file exists $dirname]} {
-	file mkdir $dirname
-}
+#set dirname "./syn/${active_design}/synthesis"
+#if {![file exists $dirname]} {
+#	file mkdir $dirname
+#}
 
-set libDir "./syn/${active_design}/synthesis/synlib"
-file mkdir $libDir
-define_design_lib $active_design -path $libDir
+#set libDir "./results/synlib"
+#file mkdir $libDir
+#define_design_lib $active_design -path $libDir
 
-
-set projectDir "./rtl/dlx_box"
-set file_extension ".vhd"
-set command "find $projectDir -type f -name *$file_extension -exec cp {} $dirname \;"
-exec $command
 
 #copia il file compile nella nuova cartella e eseguilo
 # Read all the files
-set compileFile "./scripts/syn/compile.f"
-set compileFileId [open $compileFile r]
-set HdlFileList {}
+#set compileFile "./scripts/syn/compile.f"
+#set compileFileId [open $compileFile r]
+#set HdlFileList {}
 
 # Read each line of compile.f and add the VHDL files to the list
-while {[gets $compileFileId hdlFile] != -1} {
-    lappend HdlFileList $hdlFile
-}
-close $compileFileId
+#while {[gets $compileFileId hdlFile] != -1} {
+#    lappend HdlFileList $hdlFile
+#}
+#close $compileFileId
 
 # ANALYZE HDL SOURCES
 #set HdlFileList [glob -dir "./rtl/${active_design}/verilog" "*.v*"]
-foreach hdlFile $HdlFileList {
-	if {[file extension $hdlFile]==".v"} {
-		analyze -format verilog  -library WORK $hdlFile
-   } elseif {[file extension $hdlFile]==".vhd"} {
-		analyze -format vhdl -library WORK $hdlFile
-    }
-}
+#foreach hdlFile $HdlFileList {
+	#if {[file extension $hdlFile]==".v"} {
+	#	analyze -format verilog  -library WORK $hdlFile
+   #} elseif {[file extension $hdlFile]==".vhd"} {
+#		analyze -format vhdl -library WORK $hdlFile
+    #}
+#}
 
-analyze -format vhdl -library WORK {./rtl/dlx_box/datapath/exe/alu.vhd} 
-
+analyze -library WORK -format vhdl {and2.vhd constants.vhd mux21generic.vhd mux21.vhd ffd.vhd myTypes.vhd register_generic.vhd rca.vhd fetch.vhd signExtend.vhd RegisterFile.vhd decode.vhd lfsr.vhd csb.vhd sumGenerator.vhd pg.vhd g.vhd pg_generator.vhd cla_sparse_tree.vhd xor.vhd p4_adder.vhd ctrl_alu.vhd logic_and_shift.vhd comparator.vhd outputSelect.vhd alu.vhd zero_det.vhd xnor.vhd executionUnit.vhd memory.vhd WB.vhd datapath.vhd CU_HW.vhd dlx.vhd}
 # ELABORATE DESIGN
-#elaborate -lib $active_design $active_design
+
 elaborate $active_design -architecture STRUCTURAL -library WORK
 
 # Compile the design using exact mapping
 compile -exact_map
-
 
 ######################################################################
 ##
