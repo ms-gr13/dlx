@@ -50,19 +50,8 @@ end dlx_cu;
 
 architecture dlx_cu_hw of dlx_cu is
   type mem_array is array (integer range 0 to MICROCODE_MEM_SIZE - 1) of std_logic_vector(CW_SIZE - 1 downto 0);
-  signal cw_mem : mem_array := ("110000000000100",   --NOP
-                                "111101010000111", -- R type
-                                "111011110000111", -- I type
-                                "110110111001100", -- BEQZ
-                                "110110110001100", -- BNEZ
-                                "111011111001100", -- J (0X02) instruction encoding corresponds to the address to this ROM
-                                "110100010001100", -- JAL
-                                "111011110010101", -- LW
-                                "110000000000100", -- NOP
-                                "111111110110100"  -- SW
-                                );
-                                
-                                
+  
+  
   signal IR_opcode : std_logic_vector(OP_CODE_SIZE -1 downto 0);  -- OpCode part of IR
   signal IR_func : std_logic_vector(FUNC_SIZE-1 downto 0);   -- Func part of IR when Rtype
   signal cw   : std_logic_vector(CW_SIZE - 1 downto 0); -- full control word read from cw_mem
@@ -73,19 +62,30 @@ architecture dlx_cu_hw of dlx_cu is
   signal cw2 : std_logic_vector(CW_SIZE - 1 - 2 downto 0); -- second stage (EXECUTE)
   signal cw3 : std_logic_vector(CW_SIZE - 1 - 5 downto 0); -- third stage (MEMORY)
   signal cw4 : std_logic_vector(CW_SIZE - 1 - 9 downto 0); -- fourth stage (WB)
-
+  
   signal aluOpcode_i: aluOp := NOP; -- ALUOP defined in package
   signal aluOpcode1: aluOp := NOP;
   signal aluOpcode2: aluOp := NOP;
-
-
- 
-begin  -- dlx_cu_rtl
-
+  signal cw_mem : mem_array; 
+  
+  
+  begin  -- dlx_cu_rtl
+  
+                    cw_mem <= ("110000000000100",   --NOP
+                                "111101010000111", -- R type
+                                "111011110000111", -- I type
+                                "110110111001100", -- BEQZ
+                                "110110110001100", -- BNEZ
+                                "111011111001100", -- J (0X02) instruction encoding corresponds to the address to this ROM
+                                "110100010001100", -- JAL
+                                "111011110010101", -- LW
+                                "110000000000100", -- NOP
+                                "111111110110100"  -- SW
+                                );
   IR_opcode(OP_CODE_SIZE-1 downto 0) <= IR_IN(31 downto 26);
   IR_func(10 downto 0)  <= IR_IN(FUNC_SIZE - 1 downto 0);
-
-
+  
+  
 
   -- stage one control signals
   IR_LATCH_EN  <= '1';--cw1(CW_SIZE - 1);
@@ -111,8 +111,8 @@ begin  -- dlx_cu_rtl
   -- stage five control signals
   WB_MUX_SEL <= cw3(CW_SIZE - 14);
   RF_WE      <= cw3(CW_SIZE - 15);
-
-
+  
+  
   -- process to pipeline control words
   CW_PIPE: process (Clk, Rst)
   begin  -- process Clk
@@ -124,7 +124,7 @@ begin  -- dlx_cu_rtl
       aluOpcode1 <= NOP;
       aluOpcode2 <= NOP;
     elsif Clk'event and Clk = '1' then  -- rising clock edge
-     -- if (conv_integer(IR_IN) /= 0) then --!= 0
+    -- if (conv_integer(IR_IN) /= 0) then --!= 0
         cw1 <= cw;
         cw2 <= cw1(CW_SIZE - 1 - 2 downto 0);
         cw3 <= cw2(CW_SIZE - 1 - 5 downto 0);
