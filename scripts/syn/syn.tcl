@@ -97,7 +97,7 @@ set clk_rpt "${dirname}/${active_design}_postsyn_timing.rpt"
 # Generate a timing report without constraints
 report_timing > $timing_noclk_rpt
 # Create a clock named 'CLK' with a period of 2ns
-create_clock -name "CLK" -period 2.5 CLK
+create_clock -name "Clk_port" -period 2.5 Clk_port
 # Report the properties of the clock just created
 report_clock > $clk_rpt
 # Compile the design again after clock creation

@@ -10,7 +10,7 @@ fi
 
 
 find ./rtl/dlx_box/ -type f -name *.vhd -exec cp {} ./syn/ \;
-
+find ./rtl/basic_elements/ -type f -name *.vhd -exec cp {} ./syn/ \;
 cp ./scripts/syn/.synopsys_dc.setup ./scripts/syn/syn.tcl ./syn;
 
 cd syn;
